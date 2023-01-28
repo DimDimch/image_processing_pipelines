@@ -1,0 +1,50 @@
+INSERT INTO Packages (Name, Version)  VALUES ('IM','@PACKAGE_VERSION@');
+INSERT INTO Operators (name, implementor, executable, type, Misc, Utility, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('convert','IM','convert',1,1,1,'tif','tif','1;
+Channel;string;R;
+
+-depth 8 -channel $1 -separate;','','convert','0');
+INSERT INTO Operators (name, implementor, executable, type, Morphology, Extract, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('thinning','IM','convert',1,1,1,'tif','tif','1;
+Iterations;int;-1;
+
+-depth 8 -morphology Thinning:$1 Diagonals -morphology Thinning Corners;','This method subtracts pixels from the original image to reduce the shapes into skeletons.','thinning','0');
+INSERT INTO Operators (name, implementor, executable, type, Morphology, Extract, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('correlate','IM','convert',1,1,1,'tif','tif','2;
+Radius;int;0;
+Sigma;double;1.0;
+
+-define convolve:scale="1^" -morphology Correlate Gaussian:$1x$2 -depth 8;','This method correlates image with gaussian.','correlate','0');
+INSERT INTO Operators (name, implementor, executable, type, Morphology, Extract, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('LoG','IM','convert',1,1,1,'tif','tif','2;
+Radius;int;0;
+Sigma;double;1.0;
+
+-define -morphology Convolve LoG:$1,$2 -depth 8;','Convolution with Laplacian of gaussians.','LoG','0');
+INSERT INTO Operators (name, implementor, executable, type, Morphology, Extract, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('DoG','IM','convert',1,1,1,'tif','tif','3;
+Radius;int;0;
+Sigma 1;double;1.0;
+Sigma 2;double;1.5;
+
+-define -morphology Convolve DoG:$1,$2,$3 -depth 8;','Convolution with difference of gaussians.','DoG','0');
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, segmentation, detect_edges, edges) VALUES ('imcanny','IM','convert -canny', 1, 'tif', 'tif', '4;
+Radius;double;0;
+Sigma;double;1;
+Low frac;double;0.1;
+Upper frac;string;0.3;
+
+$1x$2+$3+$4 -depth 8;', 'This operator implements the Canny algorithm for edge detection.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+The thresholds range from 0 to 100% (e.g. -canny 0x1+10%+30%) with {+lower-percent} < {+upper-percent}. If {+upper-percent} is increased but {+lower-percent} remains the same, lesser edge components will be detected, but their lengths will be the same. If {+lower-percent} is increased but {+upper-percent} is the same, the same number of edge components will be detected but their lengths will be shorter. The default thresholds are shown. The radiusxsigma controls a gaussian blur applied to the input image to reduce noise and smooth the edges.', 'canny', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, segmentation, threshold, threshold_both, adaptive, statistical) VALUES ('lat','IM','convert -lat', 1, 'tif', 'tif', '1;
+Radius;int;10;
+
+$1 -depth 8;', 'Пороговый фильтр', 'threshold', 2, 1, 1, 1, 1, 1);
+INSERT INTO Operators (name, implementor, executable, type, Morphology, Extract, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('laplacian','IM','convert',1,1,1,'tif','tif','3;
+Type;int;0;
+Scale;string;-1!;
+Bias;double;0.5;
+
+-define convolve:scale="$2" -bias $3 -morphology Convolve Laplacian:$1;','Convolution with Laplacian kernel.','laplacian','0');
+
