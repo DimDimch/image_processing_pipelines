@@ -1,3 +1,16 @@
+enums_numbers_to_str = {
+    1: 'ONE',
+    2: 'TWO',
+    3: 'THREE',
+    4: 'FOUR',
+    5: 'FIVE',
+    6: 'SIX',
+    7: 'SEVEN',
+    8: 'EIGHT',
+    9: 'NINE',
+    26: 'TWENTY_SIX'
+}
+
 templates_enums_body = {
     'ColorsEnum': "class ColorsEnum(str, Enum):\n"
                   "    RED = 'red'\n"

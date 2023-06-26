@@ -1,28 +1,34 @@
 import collections
+import json
+import os
 import sqlite3 as db
 from template_enums import templates_enums
-import csv
 import re
 
 
 class CVLibGenerator:
     def __init__(self, files_ru: tuple, files_en: tuple):
-        # TODO: parse config
         self.files_ru = files_ru
         self.files_en = files_en
 
         self.db_name = 'cvLib.db'
         self.ru_table_name = 'OperatorsRU'
         self.en_table_name = 'OperatorsEN'
+        self.help_table_name = 'OperatorsMeta'
         self.connection = db.connect('data/' + self.db_name)
 
         self.lib_file_name = 'cvlib.py'
-        self.prostack_path = 'prostak.exe'
+        self.prostack_path = r'"C:\ProStack\bin\prostak.exe"'
+        self.image_magick_path = r'"C:\Program Files\ImageMagick\magick.exe"'
+
+        if not os.path.exists('/files'):
+            os.makedirs('/files')
 
     def run(self):
         # создаем базу данных
         self.create_table(self.files_ru, self.ru_table_name)
         self.create_table(self.files_en, self.en_table_name)
+        self.create_help_table()
 
         # генерируем библиотеку
         self.create_library()
@@ -35,50 +41,90 @@ class CVLibGenerator:
             attributes += CVLibGenerator.get_attributes(file)
             requests += CVLibGenerator.get_requests(file)
         attributes = set(attributes)
-        # attributes = set([x.lower() for x in sorted(set(attributes))])
 
         with self.connection as con:
             # создаем таблицу
             cur = con.cursor()
             cur.execute('DROP TABLE IF EXISTS ' + table_name)
-            cur.execute('CREATE TABLE ' + table_name + ' ( ' + ', '.join(attributes) + ')')
+            cur.execute('CREATE TABLE ' + table_name + ' (' + ', '.join(attributes) + ')')
             # заполняем таблицу
             for req in requests:
                 req = req.replace('INTO Operators', 'INTO ' + table_name)
                 cur.execute(req)
 
+    def create_help_table(self):
+        with self.connection as con:
+            cur = con.cursor()
+            cur.execute(f"DROP TABLE IF EXISTS {self.help_table_name}")
+            cur.execute(f"CREATE TABLE {self.help_table_name}(func_name, param_template, param_names, param_types, param_defaults)")
+
+    def write_function_to_lib(self, function_meta) -> str:
+        params = self.preprocess_params(function_meta['name'], function_meta['params'])
+        command = self.preprocess_command(function_meta['command'])
+        message = self.preprocess_message(function_meta['message'])
+        implementor_path = self.preprocess_implementor(function_meta['implementor'])
+        input_files_count = self.find_files_count(function_meta['input_formats'])
+
+        # потом прибавим это для каждого кейса
+        temp = f"\n\toutputs = FilesList(func_name='{function_meta['name']}', " \
+                  f"formats='{function_meta['output_formats']}')"
+        # @ParallelCVLib()\n
+        result = f"# {self.preprocess_message(message)}\n"
+
+        if input_files_count == 0:  # если нет входных файлов
+            result += f"def {function_meta['name']}({params[0][2:]}) -> FilesList:"
+            result += temp
+            result += f"\n\tcommand = {implementor_path} + '{command}' + {params[1]} + ' ' + outputs.get_command()"
+        elif input_files_count == 1:  # если только один входной файл
+            result += f"def {function_meta['name']}(input: File{params[0]}) -> FilesList:" \
+                      f"\n\tif input.format != '{function_meta['input_formats']}':" \
+                      f"\n\t\tprint('ERROR in {function_meta['name']} function: incorrect type of input files')" \
+                      f"\n\t\treturn FilesList()"
+            result += temp
+            result += f"\n\tcommand = {implementor_path} + '{command}' + {params[1]} + input.file_path + ' ' + outputs.get_command()"
+        else:  # если больше одного входного файла
+            result += f"def {function_meta['name']}(inputs: FilesList{params[0]}) -> FilesList:" \
+                      f"\n\tif not inputs.check_formats('{function_meta['input_formats']}'):" \
+                      f"\n\t\tprint('ERROR in {function_meta['name']} function: incorrect type of input files')" \
+                      f"\n\t\treturn FilesList()"
+            result += temp
+            if function_meta['need_comma'] == 1:  # если нужна запятая (по умолчанию)
+                result += f"\n\tcommand = {implementor_path} + " + f"'{command}' + {params[1]} + " \
+                          f"inputs.get_command() + ' ' + outputs.get_command()"
+            else:
+                result += f"\n\tcommand = {implementor_path} + " + f"'{command}' + {params[1]} + " \
+                          f"inputs.get_command(need_comma=False) + ' ' + outputs.get_command()"
+
+        result += f"\n\tos.system(command)" + \
+                  f"\n\treturn outputs\n\n\n"
+        return result
+
     def create_library(self):
         with self.connection as con:
             cur = con.cursor()
             cur.execute(
-                "SELECT name, uidescription, inputs, outputs, message, executable, type, executable FROM " + self.en_table_name)
+                "SELECT name, uidescription, inputs, outputs, message, executable, type, implementor FROM " + self.en_table_name)
             rows = cur.fetchall()
 
         with open(self.lib_file_name, encoding='utf-8', mode='w') as file:
-            file.write("import os\n")
-            file.write("from files_manager import FilesManager\n")
-            file.write("from cvlib_enums import *\n\n")
-            file.write("prostack_path = '" + self.prostack_path + "'\n\n\n")
+            result = f"import os\n" \
+                     f"from files_manager import File, FilesList\n" \
+                     f"from cvlib_enums import *\n\n" \
+                     f"prostack_path = r'{self.prostack_path}'\n" \
+                     f"image_magick_path = r'{self.image_magick_path}'\n\n\n"
             for row in rows:
-                params = self.preprocess_params(func_name=row[0], params=row[1])
-                # TODO: return prostack or convert
-                command = self.preprocess_command(row[7])
-
-                file.write("# " + self.preprocess_message(message=row[4]))
-                if row[2] == '':
-                    file.write("\ndef " + row[0] + "(" + params[0][2:] + ") -> FilesManager:")
-                    file.write("\n\tinput_command = ''")
-                else:
-                    file.write("\ndef " + row[0] + "(inputs: FilesManager" + params[0] + ") -> FilesManager:")
-                    file.write("\n\tinput_command = inputs.get_command('" + row[2] + "', need_comma=" + (
-                        'True' if row[6] == 1 else 'False') + ")")
-                file.write("\n\toutputs = FilesManager()")
-                file.write("\n\toutputs.create_files(func_name='" + row[0] + "', formats='" + row[3] + "')")
-                file.write("\n\toutput_command = outputs.get_command('" + row[3] + "', need_comma=" + (
-                    'True' if row[6] == 1 else 'False') + ")")
-                file.write("\n\tos.system(prostack_path + '" + command + "' + " + params[
-                    1] + " + input_command + ' ' + output_command)")
-                file.write("\n\treturn outputs\n\n\n")
+                named_row = {
+                    'name': row[0],
+                    'params': row[1],
+                    'input_formats': row[2],
+                    'output_formats': row[3],
+                    'message': row[4],
+                    'command': row[5],
+                    'need_comma': row[6],
+                    'implementor': row[7]
+                }
+                result += self.write_function_to_lib(named_row)
+            file.write(result)
 
     @staticmethod
     def get_attributes(file_name) -> []:
@@ -129,8 +175,7 @@ class CVLibGenerator:
 
         return result
 
-    @staticmethod
-    def preprocess_params(func_name: str, params: str) -> ():
+    def preprocess_params(self, func_name: str, params: str) -> ():
         if params == 'N/A' or params == '':
             return '', "' '"
 
@@ -170,7 +215,7 @@ class CVLibGenerator:
                 if re.search(r'\d', e):
                     print(f"ERROR: проблема в формировании enum для функции {func_name} из-за наличия чисел")
                 else:
-                    body += f"    {e} = '{e}'\n"
+                    body += f"    {e.upper()} = '{e}'\n"
 
             enum_values = tuple(enum_values)
             templates_enums[enum_values] = {
@@ -204,7 +249,7 @@ class CVLibGenerator:
                 enum_name, default_value = crate_enum(enum_values=a[3:], param_name=normal_param_name)
 
                 param_types.append(enum_name)
-                default_values[-1] = f"{enum_name}.{default_value}"
+                default_values[-1] = f"{enum_name}.{default_value.upper()}"
             else:
                 param_types.append(preprocess_param_type(a[1]))
 
@@ -254,6 +299,19 @@ class CVLibGenerator:
             for val in templates_enums.values():
                 file.write(val['body'])
 
+        # добавляем в базу
+        # поля: func_name, param_template, param_names, param_types, param_defaults
+        with self.connection as con:
+            cur = con.cursor()
+            req = f'INSERT INTO {self.help_table_name} VALUES(' + \
+                f"'{func_name}'," + \
+                f"'{items[-1]}'," + \
+                "'[\"{}\"]', ".format('", "'.join(param_names)) + \
+                "'[\"{}\"]', ".format('", "'.join(param_types)) + \
+                "'[\"{}\"]'".format('", "'.join(default_values)) + \
+                ')'
+            cur.execute(req)
+
         return ', ' + func_command, prostack_command + " + ' '"
 
     @staticmethod
@@ -262,3 +320,17 @@ class CVLibGenerator:
             return command[len('prostak'):]
         else:
             return command
+
+    @staticmethod
+    def preprocess_implementor(implementor: str) -> str:
+        if implementor == 'ProStack':
+            return "prostack_path"
+        elif implementor == 'IM':
+            return "image_magick_path + ' '"
+
+    @staticmethod
+    def find_files_count(files: str) -> int:
+        if files == '':
+            return 0
+        else:
+            return len([f for f in files.split(',') if f != ''])

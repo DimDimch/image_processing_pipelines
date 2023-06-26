@@ -1,17 +1,13 @@
-import os
+import multiprocessing
 
 
-class ParallelCVLib:
+class CVLibParallel:
     def __init__(self):
-        self.result = {}
-        with open('test.py', 'r') as file:
-            print(file.read())
-            print(os.path.basename(__file__))
+        self.pool = multiprocessing.Pool(processes=4)
 
-    def __call__(self, func):
-        def new_func(*args, **kwargs):
-            result = func(*args, **kwargs)
-            return result
-        return new_func
+    def run(self, tasks):
+        results = {}
 
-
+        for task in tasks:
+            results[task] = self.pool.apply_async(tasks[task]['func'], tasks[task]['args'])
+        return results

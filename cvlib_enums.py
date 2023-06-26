@@ -67,52 +67,52 @@ class APEnum(str, Enum):
 
 
 class AndifFunction_typeEnum(str, Enum):
-    exp = 'exp'
-    frac = 'frac'
+    EXP = 'exp'
+    FRAC = 'frac'
 
 
 class Plot_spFunctionEnum(str, Enum):
-    log = 'log'
-    eqn = 'eqn'
+    LOG = 'log'
+    EQN = 'eqn'
 
 
 class SselectRuleEnum(str, Enum):
-    accept = 'accept'
-    reject = 'reject'
+    ACCEPT = 'accept'
+    REJECT = 'reject'
 
 
 class ThresholdMethodEnum(str, Enum):
-    plain = 'plain'
-    otsu = 'otsu'
+    PLAIN = 'plain'
+    OTSU = 'otsu'
 
 
 class VtxtFormatEnum(str, Enum):
-    xyz = 'xyz'
-    vrml_sphere = 'vrml_sphere'
+    XYZ = 'xyz'
+    VRML_SPHERE = 'vrml_sphere'
 
 
 class Surf3dFormatEnum(str, Enum):
-    vtk = 'vtk'
-    oogl = 'oogl'
-    ooglb = 'ooglb'
-    gts = 'gts'
+    VTK = 'vtk'
+    OOGL = 'oogl'
+    OOGLB = 'ooglb'
+    GTS = 'gts'
 
 
 class Grid3d_iTypeEnum(str, Enum):
-    cartesian = 'cartesian'
-    elliptical = 'elliptical'
+    CARTESIAN = 'cartesian'
+    ELLIPTICAL = 'elliptical'
 
 
 class Surf3dfullFunctionEnum(str, Enum):
-    cartesian = 'cartesian'
-    tetra = 'tetra'
-    tetra_bounded = 'tetra_bounded'
-    tetra_bcl = 'tetra_bcl'
+    CARTESIAN = 'cartesian'
+    TETRA = 'tetra'
+    TETRA_BOUNDED = 'tetra_bounded'
+    TETRA_BCL = 'tetra_bcl'
 
 
 class MlsregTypeEnum(str, Enum):
-    affine = 'affine'
-    similar = 'similar'
-    rigid = 'rigid'
+    AFFINE = 'affine'
+    SIMILAR = 'similar'
+    RIGID = 'rigid'
 
 

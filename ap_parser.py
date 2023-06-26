@@ -13,6 +13,7 @@ class Node(object):
         self.type: str = ''
         self.name: str = ''
         self.file: str = ''
+        self.label: str = ''
         self.var_name: str = ''
         self.params: str = ''
 
@@ -22,6 +23,9 @@ class Node(object):
         if isinstance(other, Node) and other.num_node == self.num_node:
             return True
         return False
+
+    def __hash__(self):
+        return hash(self.num_node)
 
 
 class APparser:
@@ -64,6 +68,7 @@ class APparser:
         # итерируемся по всем выходам узлов
         for out_node_str in config.options("Connections"):
             node_number = int(out_node_str.split(".")[0])
+            node_output_num = int(out_node_str.split(".")[1])
 
             # добавляем узел в лист, если его там нет
             if not self.is_in_grid(node_number):
@@ -95,17 +100,15 @@ class APparser:
                     else:
                         input_node.in_nodes.update({input_number: node})
 
-        # заполняем выходы узла
-        for node in self.nodes_grid:
-            if node.in_nodes is None:
-                pass
-            else:
-                for i in range(len(node.in_nodes)):
-                    input_node = node.in_nodes[i + 1]
-                    if input_node.out_nodes is None:
-                        input_node.out_nodes = {1: node}
+                # достаем узел, чтобы добавить информацию о выходных узлах
+                input_node = self.get_node(input_node_number)
+                if node.out_nodes is None:
+                    node.out_nodes = {node_output_num: [input_node]}
+                else:
+                    if node_output_num not in node.out_nodes:
+                        node.out_nodes[node_output_num] = [input_node]
                     else:
-                        input_node.out_nodes.update({len(input_node.out_nodes) + 1: node})
+                        node.out_nodes[node_output_num].append(input_node)
 
     def fill_nodes_info(self, config):
         # пока не заполним все узлы
@@ -125,48 +128,38 @@ class APparser:
                         node.file = config_section['file']
                     if 'id' in list_elements_of_node:
                         node.params = config_section['id']
+                    if 'label' in list_elements_of_node:
+                        node.label = config_section['label']
                     node.is_checked = True
 
     def fill_serial_numbers(self):
-        visited = {}
-        result = {int: []}
-
-        def dfs(start: int, visited):
-            if start not in list(visited.keys()):
-                visited[start] = 0
-
-            # if self.get_node(start).num_node == 33:
-            #     print(start)
-
-            if self.get_node(start).in_nodes is None:
-                len_in_nodes = 0
-            else:
-                len_in_nodes = len(self.get_node(start).in_nodes)
-
-            if visited[start] <= len_in_nodes:
-                visited[start] += 1
-                out_nodes = self.get_node(start).out_nodes
-                in_nodes = self.get_node(start).in_nodes
-                max_serial_num = 0
-
-                if in_nodes is not None:
-                    for i in range(len(in_nodes)):
-                        if in_nodes[i + 1].serial_num + 1 > max_serial_num:
-                            max_serial_num = in_nodes[i + 1].serial_num + 1
-                    self.get_node(start).serial_num = max_serial_num
-
-                if max_serial_num in result:
-                    result[max_serial_num].append(start)
-                else:
-                    result[max_serial_num] = [start]
-
-                if out_nodes is not None:
-                    for i in range(len(out_nodes)):
-                        neighbour = out_nodes[i + 1].num_node
-                        dfs(neighbour, visited)
+        in_degree = {Node: int}
+        queue = []
 
         for node in self.nodes_grid:
             if node.in_nodes is None:
-                dfs(node.num_node, visited)
-        for pair in result:
-            print(pair, result[pair])
+                in_degree[node] = 0
+                queue.append(node)
+            else:
+                in_degree[node] = len(node.in_nodes)
+
+        cnt = 0
+        top_order = []
+
+        while queue:
+            u = queue.pop(0)
+            top_order.append(u)
+
+            if u.out_nodes is not None:
+                for i in u.out_nodes:
+                    for j in u.out_nodes[i]:
+                        in_degree[j] -= 1
+                        if in_degree[j] == 0:
+                            queue.append(j)
+
+            cnt += 1
+
+        if cnt != len(self.nodes_grid):
+            print("ERROR: there exists a cycle in the scenario")
+        else:
+            self.nodes_grid = top_order
