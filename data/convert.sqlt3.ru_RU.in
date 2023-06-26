@@ -1,0 +1,43 @@
+INSERT INTO Packages (Name, Version)  VALUES ('IM','@PACKAGE_VERSION@');
+INSERT INTO Operators (name, implementor, executable, type, Разное, Утилиты, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('convert','IM','convert',1,1,1,'tif','tif','1;
+Channel;string;R;
+
+-depth 8 -channel $1 -separate;','','Извлекает из изображения нужный канал в градациях серого с разрешением 8 бит.','0');
+INSERT INTO Operators (name, implementor, executable, type, Морфология, Извлечь, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('thinning','IM','convert',1,1,1,'tif','tif','1;
+Iterations;int;-1;
+
+-depth 8 -morphology Thinning:$1 Diagonals -morphology Thinning Corners;','Этот оператор сжимает объект в скелет.','thinning','0');
+INSERT INTO Operators (name, implementor, executable, type, Морфология, Извлечь, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('correlate','IM','convert',1,1,1,'tif','tif','2;
+Radius;int;0;
+Sigma;double;1.0;
+
+-define convolve:scale="1^" -morphology Correlate Gaussian:$1x$2 -depth 8;','Этот оператор вычисляет корреляцию с гауссианом.','correlate','0');
+INSERT INTO Operators (name, implementor, executable, type, Морфология, Извлечь, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('LoG','IM','convert',1,1,1,'tif','tif','2;
+Radius;int;0;
+Sigma;double;1.0;
+
+-define -morphology Convolve LoG:$1,$2 -depth 8;','Этот оператор вычисляет лапласиан гауссианом.','LoG','0');
+INSERT INTO Operators (name, implementor, executable, type, Морфология, Извлечь, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('DoG','IM','convert',1,1,1,'tif','tif','3;
+Radius;int;0;
+Sigma 1;double;1.0;
+Sigma 2;double;1.5;
+
+-define -morphology Convolve DoG:$1,$2,$3 -depth 8;','Этот оператор вычисляет разность гауссианов.','DoG','0');
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Сегментация, Определение_границ, Границы) VALUES ('imcanny','IM','convert -canny', 1, 'tif', 'tif', '4;
+Radius;double;0;
+Sigma;double;1;
+Low frac;double;0.1;
+Upper frac;string;0.3;
+
+$1x$2+$3+$4 -depth 8;', 'Этот оператор реализует алгоритм Canny для обнаружения краев.', 'canny', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Сегментация, Пороговый_фильтр, Порог, Адаптивный, Статистический) VALUES ('lat','IM','convert -lat', 1, 'tif', 'tif', '1;
+Радиус;int;10;
+
+$1 -depth 8;', 'Пороговый фильтр', 'threshold', 2, 1, 1, 1, 1, 1);
+INSERT INTO Operators (name, implementor, executable, type, Морфология, Извлечь, inputs, outputs, uidescription, message, metaname, metaweight) VALUES ('laplacian','IM','convert',1,1,1,'tif','tif','3;
+Type;int;0;
+Scale;string;-1!;
+Bias;double;0.5;
+
+-define convolve:scale="$2" -bias $3 -morphology Convolve Laplacian:$1;','Этот оператор вычисляет свертку с лапласианом.','laplacian','0');
+

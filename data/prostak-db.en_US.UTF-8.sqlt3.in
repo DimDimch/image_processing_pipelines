@@ -1,0 +1,2227 @@
+INSERT OR REPLACE INTO Packages (Name, Version, APIChanged)  VALUES ('ProStack','@PACKAGE_VERSION@',1);
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('andif','0.0.0','$1,$2,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('apee','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('apsc','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('ar_x','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('bolin','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('cwtsd','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('despekle','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('distance','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('edge','0.0.0','$1,$2,$3,$4,$5,$6,$7');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('expand','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('fill','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('lev','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('mcrop','0.0.0','$5 $6 $1,$2,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('movl2','0.0.0','$1,$2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('movl3','0.0.0','$1,$2,$3');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('movl6','0.0.0','$1,$2,$3,$4,$5,$6');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('mpad','0.0.0','$5 $6 $1,$2,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('m_ar_x','0.0.0','$1,$2,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('m_ar_plus','0.0.0','$1,$2,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('mul','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('pad','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('plot_sp','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('ppix','0.0.0','$1,$2,$3,$4,$5,$6');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('raw','0.0.0','$1,$2,$3');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('revcol','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('revrow','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('rogri','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('ropol','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('shrink','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('solo','0.0.0','$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('solo3','0.0.0','$1,$2,$3,$4,$5,$6,$7,$8,$9');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('strel','0.0.0','$1,$2,$3');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('sselect','0.0.0','-p $4 -s $1,$2,$3 -r $5');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('threshold','0.0.0','-p $1 -s $2 $3');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('turn','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('blob','0.0.0','$1,$2,$3');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('regmax','0.0.0','$2,$1,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('regmin','0.0.0','$2,$1,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('reconstruct','0.0.0','');
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility) VALUES ('align','ProStack','prostak -o align', 1, "tif", "txt", "N/A", "This operator generates the rules to put the image of Drosophila embryo into standard orientation. It checks whether the posterior part of an embryo is larger than the anterior one, and whether the ventral part is larger than the dorsal one. The output text file contains the list of needed operations.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 text:.txt
+
+The format of an output file:
+
+<alighn>
+transpose or - if not needed
+reversecolumn or - if not needed
+reverserows or - if not needed
+</alighn>", 'align', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, errors, correction, contrast, anisotropic_diffusion) VALUES ('andif','ProStack','prostak -o andif', 1, "tif", "tif", "4;
+Iterations;int;3;
+Time step(<=1);double;0.9;
+Threshold(<1);double;0.9;
+Function type;choice;2;exp;frac;
+
+-s $1,$2,$3,$4;", "Diffusion algorithms remove noise from an image by modifying the image via a partial differential equation (PDE). Anisotropic diffusion lets the diffusion coefficient to vary spatially so as to enhance the intra-region smoothing in preference to the inter-region one. Region boundaries remain sharp. The details can be found in [4]. The PDE is discretized in space using the pixel locations as knots of the grid. The original image is used as the initial condition and the PDE is numerically integrated over time with the integration ('time') step and the number of iterations supplied as parameters. Two edge-stopping functions were proposed in the original paper. The additional parameter called Threshold controls the 'sensitivity' of the edge-stopping function. The parameters are to be determined experimentally to achieve the desired result.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Number of iterations
+Time step(<=1)
+Threshold(<1) for edge stopping function
+The type of edge stopping function", 'andif', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility) VALUES ('apee','ProStack','prostak -o apee', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator applies the rules to put the image of Drosophila embryo into standard orientation. These rules are generated by the align (see 8.1) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'apee', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility) VALUES ('apsc','ProStack','prostak -o apsc', 1, "txt,txt", "txt", "1;
+Direction;choice;2;A;P;
+
+-s $1;", "This operator checks the rules generated by align (see 8.1) operator using the result of chemar (see 8.17) operator. The resultant rules can be used to correct the orientation.
+
+INPUT
+1 text:.txt
+2 text:.txt
+OUTPUT
+1 text:.txt
+PARAMETERS
+Direction – indicates in which part of an embryo ( A(anterior) or P(posterior)) the level of gene expression should be higher.", 'apsc', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, measure, dimensions, geometry) VALUES ('ar_minus','ProStack','prostak -o ar_minus', 1, "txt,txt", "txt", "N/A", "This operator subtracts the image dimensions that are given as a string of four numbers which are distances measured in pixels from the image center to its borders. These dimensions can be calculated by the halfsizes (see 8.61) operator.
+
+INPUT
+1 text:.txt
+2 text:.txt
+OUTPUT
+1 text:.txt", 'ar_minus', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, measure, dimensions, geometry) VALUES ('ar_plus','ProStack','prostak -o ar_plus', 1, "txt,txt", "txt", "N/A", "This operator sums up the image dimensions that are given by a string of four numbers which are the distances measured in pixels from the image center to its borders. The dimensions can be calculated by the halfsizes (see 8.61) operator.
+
+INPUT
+1 text:.txt
+2 text:.txt
+OUTPUT
+1 text:.txt", 'ar_plus', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, measure, dimensions, geometry) VALUES ('ar_x','ProStack','prostak -o ar_x', 0, "txt", "txt", "1;
+Value;double;1;
+
+-p $1;", "This operator multiplies by a constant the image dimensions given by a string of four numbers which are the distances measured in pixels from the image center to its borders. The dimensions can be calculated by the halfsizes (see 8.61) operator. The constant is defined as a parameter.
+
+INPUT
+1 text:.txt
+OUTPUT
+1 text:.txt
+PARAMETERS
+Value – the multiplier.", 'ar_x', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, combination, pixelwise, average) VALUES ('avg','ProStack','prostak -o avg', 1, "tif,tif,tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator averages three images pixel by pixel.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif
+OUTPUT
+1 image:.tif", 'average3', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, combination, pixelwise, average) VALUES ('avg2','ProStack','prostak -o avg', 1, "tif,tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator averages two images pixel by pixel.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'average', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, polar_mesh) VALUES ('blo2pol','ProStack','prostak -o blo2pol', 1, "tif,txt", "txt", "N/A", "This operator converts the coordinates of centroids of blobs to polar coordinates. The center of coordinate system is calculated from the input mask image. The list of blobs is input to the second port and can be calculated by the blob (see 8.14) operator.
+
+INPUT
+1 image:.tif - mask image
+2 text:.txt
+OUTPUT
+1 text:.txt", 'blo2pol', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, properties, draw_objects) VALUES ('bolb','ProStack','prostak -o bolb', 1, "txt", "tif", "N/A", "This operator restores an image of blobs from the list stored in the input file.
+
+INPUT
+1 text:.txt
+OUTPUT
+1 image:.tif", 'bolb', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, properties, draw_objects) VALUES ('bolin','ProStack','prostak -o bolin', 1, "txt", "tif", "1;
+Index;int;0;
+
+-r $1;", "This operator restores an image of the selected blob from the list stored in the input file. The blob is selected by the index.
+
+INPUT
+1 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Index – index of the blob.", 'bolin', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility) VALUES ('chemar','ProStack','prostak -o chemar', 1, "tif", "txt", "N/A", "This operator calculates the average intensity in the left and right parts of the image.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 text:.txt
+
+Format of the output file:
+<chemar>
+R - if the the average intensity on the left is greater and L otherwise,
+'average intensity on the left' 'average intensity on the right',
+</chemar>", 'chemar', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, fill) VALUES ('chole','ProStack','prostak -o chole', 1, "tif,txt", "tif", "N/A", "This operator fills the regions of 'off' pixels surrounded by 'on' pixels using a structural element. Unclosed contours are erased. The structural element can be calculated by the strel (see 8.139) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt - structural element
+OUTPUT
+1 image:.tif", 'chole', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, crop) VALUES ('crop','ProStack','prostak -o crop', 1, "tif", "tif,txt", "N/A", "This operator reduces the dimensions of the input image to the minimal rectangular area required to cover all 'on' pixels. The number of erased pixels is stored in the second output file that can be used to crop other images by the geometry (see 8.50) operator.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+2 text:.txt
+
+The format of output file:
+<crop>
+upper offset,lower offset, left offset, right offset - numbers of pixels cropped at each side,
+</crop>", 'crop', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, extract, watershed_transform, watershed) VALUES ('cwtsd','ProStack','prostak -o cwtsd', 1, "tif", "tif", "1;
+Connectivity;choice;2;4;8;
+
+-r $1;", "This operator makes a watershed transformation of an input image. The connectivity can be defined as a parameter.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Connectivity - defines the neighborhood: 4 or 8.", 'cwtsd', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, errors, despeckle, correction, denoising) VALUES ('despekle','ProStack','prostak -o despekle', 1, "tif", "tif", "1;
+Iterations;int;1;
+
+-r $1;", "This operator reduces the intensity of salt and pepper noise in an image using the Crimmins complementary hulling algorithm [1]. This algorithm smoothes the image by reducing the magnitude of locally inconsistent pixels, as well as by increasing the magnitude of pixels in the neighbourhood surrounding a spike. The spike is defined here as a pixel whose value is different from its surroundings by more than 2 intensity levels. Increasing number of iterations of the algorithm can introduce an effect of blurring of the image. In the ultimate case all sharp gradients will be smoothed down to a magnitude of 2 intensity levels. case
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Iterations - number of sweeps.", 'despeckle', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, extract, distance_transform, transform, intensity) VALUES ('distance','ProStack','prostak -o distance', 1, "tif", "tif", "1;
+Window;choice;3;3;5;7;
+
+-r $1;", "This operator replaces the value of each pixel in the input image by the Euclidean distance from this pixel to the nearest 'off' pixel. The Window parameter defines the size (in pixels) of the neighbourhood of the pixel under consideration used in calculations.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Window- defines the approximation of the distance measure.", 'distance', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, segmentation, detect_edges, edges) VALUES ('edge','ProStack','prostak -o edge', 1, "tif", "tif", "7;
+a1;double;0.76543;
+a2;double;0.76543;
+Low threshold;double;3;
+High threshold;double;12;
+Window;int;11;
+Segment;int;11;
+Connectivity;choice;2;4;8;
+
+-s $1,$2,$3,$4,$5,$6,$7;", "This operator detects the edges of objects in the input image using the Shen-Castan Detector [5, 6].
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+a1, a2 - parameters of the Infinite Symmetric Exponential Filter (ISEF), 0 < a1 < 1, 0 < a2 < 1.
+Low threshold - the minimal value of gradient magnitude,
+High threshold - the maximal minimal value of gradient magnitude,
+Window - size of window to calculate the magnitude of gradient,
+Segment - minimal number of pixels in the edge segment. The width or height of a window cannot be an even number,
+Connectivity - 4 or 8-neighborhood.", 'edge', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, scale) VALUES ('expand','ProStack','prostak -o expand', 1, "tif", "tif", "1;
+Scale from 1;double;2.0;
+
+-p $1;", "This operator increases the size of the input image using the pixel replication.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Scale - the scale factor.", 'expand', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, fill) VALUES ('fill','ProStack','prostak -o fill', 1, "tif", "tif", "1;
+Connectivity;choice;2;4;8;
+
+-r $1;", "This operator fills the regions of 'off' pixels surrounded by 'on' pixels.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Connectivity - 4 or 8 neighbourhood.", 'fill', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, dilation) VALUES ('gdilation','ProStack','prostak -o gdilation', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator does successive dilations of the input image by the structural element supplied as the second input. The structural element can be calculated by the strel (see 8.139) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions - number of sweeps.", 'dilation', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, open) VALUES ('gopen','ProStack','prostak -o gopen', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator performs morphological opening which is the erosion followed by dilation using the structural element supplied as the second input. The structural element can be calculated by the strel (see 8.139) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions - number of sweeps.", 'opening', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, close) VALUES ('gclose','ProStack','prostak -o gclose', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator performs morphological closing which is the dilation followed by erosion using the structural element supplied as the second input. The structural element can be calculated by the strel (see 8.139) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions - number of sweeps.", 'closing', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry) VALUES ('geometry','ProStack','prostak -o geometry', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator reduces dimensions of the input image. It crops pixels from each side of the image. The number of pixels is defined in the second input that can be generated by the crop (see 8.22) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'geometry', 2, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, erosion) VALUES ('gerosion','ProStack','prostak -o gerosion', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator does successive erosions of the input image by the structural element supplied as the second input. The structural element can be calculated by the strel (see 8.139) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions - number of sweeps.", 'erosion', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, extract, gradient_magnitude, detect_edges, transform, intensity) VALUES ('gmag','ProStack','prostak -o gmag', 1, "tif", "tif", "N/A", "This operator calculates the magnitude of the gradient.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'gradientmagnitude', 2, 1, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, measure, dimensions, geometry) VALUES ('halfsizes','ProStack','prostak -o halfsizes', 1, "tif", "txt", "N/A", "This operator prints dimensions of the image as a string of four numbers representing the distance in pixels from the image center to the borders.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 text:.txt
+
+The format of output file:
+<halfsizes>
+upper offset,lower offset, left offset, right offset - the distances in pixels from the image center to the borders
+</halfsizes>", 'halfsizes', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, correction, contrast, histogram_equalization) VALUES ('heqm','ProStack','prostak -o heq', 1, "tif,tif", "tif", "N/A", "This operator performs the histogram equalization taking into account only those pixels that are 'on' in the mask that comes from the second input.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'histeqmask', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, correction, contrast, histogram_equalization) VALUES ('heq','ProStack','prostak -o heq', 1, "tif", "tif", "N/A", "This operator equalizes the histogram of the image. The idea is to spread out the histogram values to fill the entire range of the data type to enhance details that would be otherwise lost.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'histeq', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, correction, contrast, histogram_equalization) VALUES ('hno','ProStack','prostak -o hno', 1, "tif", "tif", "N/A", "This operator normalizes the histogram of the image.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'histnorm', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility) VALUES ('hues','ProStack','prostak -o hues', 1, "tif,tif,tif", "tif", "N/A", "This operator combines grayscale images of three color channels (Red, Green and Blue) to the one grayscale image in which each pixel equals the product of Hue and Saturation values in this pixel. The color channels can be extracted by the splitrgb (see 8.136) operator.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif
+OUTPUT
+1 image:.tif", 'hues', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, unary, complement) VALUES ('invert','ProStack','prostak -o invert', 1, "tif", "tif", "N/A", "This operator inverts the grayscale values of all pixels in input image.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'invert', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, segmentation, threshold, hard) VALUES ('lev','ProStack','prostak -o lev', 1, "tif", "tif", "1;
+Index;int;0;
+
+-r $1;", "Those pixels that have the given intensity in the input image have the maximal intensity in the output image. The other pixels are 'off'.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Index - intensity.", 'level', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, local_histogram_equalization, correction, contrast) VALUES ('lheq','ProStack','prostak -o lheq', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator performs histogram equalization separately for each pixel using the neighborhood defined by the structural element from the second input. The structural element can be calculated by the strel (see 8.139) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions- number of sweeps.", 'histeqloc', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, correction, contrast) VALUES ('lhbg','ProStack','prostak -o lhbg', 1, "tif,txt", "tif", "", "This operator estimates background for each pixel using the neighborhood defined by the structural element from the second input. The structural element can be calculated by the strel (see 8.139) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+", 'bg', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, combination, pixelwise) VALUES ('mask','ProStack','prostak -o mask', 1, "tif,tif", "tif", "N/A", "This operator masks the first input image by the second one. The pixels that are 'off' in the mask are 'off' in the output image. Other pixels are kept unchanged from the input. The mask comes from the second input.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'mask', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, combination, pixelwise, maximum) VALUES ('max','ProStack','prostak -o max', 1, "tif,tif,tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator computes pixel by pixel maximum of three input images.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif
+OUTPUT
+1 image:.tif", 'maximum3', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, combination, pixelwise, maximum) VALUES ('max2','ProStack','prostak -o max', 1, "tif,tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator computes pixel by pixel maximum of two input images.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'maximum', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, crop) VALUES ('mcrop','ProStack','prostak -o geometry', 1, "tif", "tif", "6;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;", "This operator reduces the dimensions of the input image. It crops the defined number of pixels from the each side of the image.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Upper offset - number of pixels to crop from the top,
+Lower offset - number of pixels to crop from the bottom,
+Left offset - number of pixels to crop from the left,
+Right offset - number of pixels to crop from the right.", 'mancrop', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, correction, smoothing, median) VALUES ('median','ProStack','prostak -o median', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator computes a two dimensional median filter of a structural element over the given image. The structural element comes from the second input.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions- number of sweeps.", 'median', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, extract) VALUES ('match','ProStack','prostak -o match', 1, "tif,txt", "tif", "N/A", "This operator finds in the binary image objects matching the template provided in the second input as the structural element. The structural element can be calculated by the strel (see 8.139) operator. Each matching object in the output binary image is marked with one bright pixel. This output can be used as the marker image for the reconstruct (see 8.113) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif.", 'match', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, absolute_difference, combination, pixelwise) VALUES ('minusabs','ProStack','prostak -o minusabs', 1, "tif,tif", "tif", "N/A", "This operator produces the image of the absolute value of differences between pixel values of input images.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'minusabs', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, combination, color, layers) VALUES ('movl2','ProStack','prostak -o movl', 1, "tif,tif", "tif", "2;
+Color 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2;", "This operator combines two grayscale images into one color image. The colors for each input can be selected from the list.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Color 1 - color for the first input,
+Color 2 - color for the second input.", 'colorcomb2', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, combination, color, layers, rgbmerge) VALUES ('movl3','ProStack','prostak -o movl', 1, "tif,tif,tif", "tif", "3;
+Color 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 3;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2,$3;", "This operator combines three grayscale images into one color image. The colors for each input can be selected from the list.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Color 1 - color for the first input,
+Color 2 - color for the second input,
+Color 3 - color for the third input.", 'colorcomb3', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, combination, color, layers) VALUES ('movl6','ProStack','prostak -o movl', 1, "tif,tif,tif,tif,tif,tif", "tif", "6;
+Color 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 3;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 4;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 5;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 6;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2,$3,$4,$5,$6;", "This operator combines six grayscale images into one color image. The colors for each input can be selected from the list.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif
+4 image:.tif
+5 image:.tif
+6 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Color 1 - color for the first input,
+Color 2 - color for the second input,
+Color 3 - color for the third input,
+Color 4 - color for the fourth input,
+Color 5 - color for the fifth input,
+Color 6 - color for the sixth input.", 'colorcomb6', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, pad) VALUES ('mpad','ProStack','prostak -o pad', 1, "tif", "tif", "6;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;", "This operator expands the dimensions of the input image. It adds the given number of pixels from the each side of the image.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Upper offset - number of pixels to add from the top,
+Lower offset - number of pixels to add from the bottom,
+Left offset - number of pixels to add from the left,
+Right offset - number of pixels to add from the right.", 'manpad', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, multiply, combination, pixelwise) VALUES ('mul','ProStack','prostak -o mul', 1, "tif,tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator multiplies each data point in multiplier image by the corresponding data point in input image and returns the product in the corresponding data point of the output image.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'multiply', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, pad) VALUES ('pad','ProStack','prostak -o pad', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator expands the dimensions of the input image. It adds the pixels to the each side of the image. The number of pixels is defined in the second input that can be generated by the crop (see 8.22) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'pad', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, line_plot) VALUES ('plot_sp','ProStack','prostak -o plot_sp', 1, "tif", "txt", "2;
+Increment;int;1;
+Function;choice;2;log;eqn;
+
+-r $1 -s $2;", "This operator prints the values of pixels to the text file. Increment parameter n greater than 1 allows to print out only each nth pixel. Function parameter allows to print the actual values (eqn) or the natural logarithm (log) of the intensity.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 text:.txt
+PARAMETERS
+Increment - counter increment,
+Function - actual value or logarithm.", 'plot_sp', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, line_plot) VALUES ('ppix','ProStack','prostak -o ppix', 1, "tif", "txt,tif", "6;
+ac;double;1.0;
+bc;double;0.0;
+ar;double;1.0;
+br;double;0.0;
+t0;double;0.0;
+tN;double;1.0;
+
+-s $1,$2,$3,$4,$5,$6;", "This operator prints the values of pixels along the line to the text file. The line is defined as two parametric functions: r = ar * t + br for row and c = ac * t + bc for column, where parameter t spans the interval [t0,tN]. The second output shows the image with the line superimposed on it.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 text:.txt
+2 image:.tif
+PARAMETERS
+ac - slope of parametric function for column,
+bc - offset of parametric function for column,
+ar - slope of parametric function for row,
+br - offset of parametric function for row,
+t0 - lower limit for parameter,
+tN - upper limit for parameter.", 'plotpixels', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility) VALUES ('raw','ProStack','prostak -o raw', 1, "tif", "tif", "3;
+Columns;int;1024;
+Rows;int;1024;
+Bps;int;8;
+
+-s $1,$2,$3;", "This operator reads raw image and writes it in tiff format.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Columns - number of columns in the image,
+Rows - number of rows in the image,
+Bps - number of bits per pixel.", 'raw', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, reconstruct, errors) VALUES ('reconstruct','ProStack','prostak -o reconstruct', 1, "tif,tif", "tif", "1;
+Connectivity;choice;2;4;8;
+
+-r $1;", "This operator performs morphological reconstruction of the image from the marker image.
+
+INPUT
+1 image:.tif
+2 marker:.tif
+OUTPUT
+1 image:.tif", 'reconstruct', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, orientation, reverse_columns) VALUES ('revcol','ProStack','prostak -o revcol', 1, "tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator reverses columns in the image. Thus the leftmost pixel in each row becomes the rightmost one and so on.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'revcol', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, orientation, reverse_rows) VALUES ('revrow','ProStack','prostak -o revrow', 1, "tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator reverses rows in the image. Thus the uppermost pixel in each column becomes the lowest and so on.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'revrow', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, polar_mesh) VALUES ('robel','ProStack','prostak -o robel', 1, "tif,tif,txt", "tif", "N/A", "This operator produces the image of round strip that includes all blobs from the second input. The first input is used to determine the center of polar coordinates. The third input contains the list of points in polar coordinates that determine the inner and outer borders of the round strip. This file can be generated by the ropri (see 8.125) operator. The pixel in the output image is 'on' if it is 'on' in the second input and its coordinates belong to the round strip.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 text:.txt
+OUTPUT
+1 image:.tif", 'robel', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, polar_mesh) VALUES ('rogri','ProStack','prostak -o rogri', 1, "tif,tif", "tif", "2;
+Number of bins;int;0;
+Accuracy;double;0.01;
+
+-r $1 -p $2;", "This operator divides the image from the second input into sectors. The pixels are switched off in the output if their polar angle is closer than the predefined value (Accuracy) to the sector delimiter.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Number of bins - number of sectors to produce,
+Accuracy", 'rogri', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, polar_mesh) VALUES ('ropol','ProStack','prostak -o ropol', 1, "tif,tif,tif", "txt", "1;
+Function;choice;2;log;eqn;
+
+-s $1;", "This operator prints the pixel values from the third input to the text file in polar coordinates. The center of the coordinate system is calculated from the first input. The second input is used as the mask. Function parameter allows to print the actual values (eqn) or the natural logarithm (log) of the intensity.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif
+OUTPUT
+1 text:.txt
+PARAMETERS
+Function - the actual value (eqn) or the natural logarithm (log).", 'ropol', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, polar_mesh) VALUES ('ropri','ProStack','prostak -o ropri', 1, "tif,txt", "txt", "N/A", "This operator calculates the list of points in polar coordinates that determines the inner and outer borders of the round strip. The center of the polar coordinates is calculated from the first input. The second input is the list of blobs with polar coordinates of centroids that can be calculated by the blo2pol (see 8.13) operator. The output is sorted with respect to the polar angle.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 text:.txt", 'ropri', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, orientation, rotate) VALUES ('rotate','ProStack','prostak -o rotate', 1, "tif", "tif,txt", "N/A", "This operator computes the rotation angle using invariant moments and rotates the image. The text file with calculated angle is the second output.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+2 text:.txt", 'anglerotate', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, scale) VALUES ('shrink','ProStack','prostak -o shrink', 1, "tif", "tif", "1;
+Scale from 0 to 1;double;0.5;
+
+-p $1;", "This operator reduces the size of the input image using pixel subsampling.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Scale - the scaling factor from 0 to 1.", 'shrink', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('solo','ProStack','prostak -o solo', 1, "txt,tif,tif,tif,tif,tif", "txt", "16;
+Mask 1;choice;3;nuclear;energid;outnuc;
+Stat 1;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 1;int;1;
+Mask 2;choice;3;nuclear;energid;outnuc;
+Stat 2;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 2;int;1;
+Mask 3;choice;3;nuclear;energid;outnuc;
+Stat 3;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 3;int;1;
+Mask 4;choice;3;nuclear;energid;outnuc;
+Stat 4;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 4;int;1;
+Mask 5;choice;3;nuclear;energid;outnuc;
+Stat 5;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 5;int;1;
+Output with 8 bits;bool;%20;-a;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15 $16;", "This operator calculates the given statistical estimator of pixel intensities for each blob, listed in the first input that can be generated by the blob operator. The statistical estimators are calculated for each of five input images – channels (inputs 2 – 6). They are placed in the corresponding column of the output file. The mean value, median value, maximum, minimum, number of pixels, variation or standard deviation can be calculated for blobs (nuclear), their surroundings (outnuc) and the union of them (energid). The ratio of variances in pixel values between and within these two classes (varbc) can be calculated if outnuc is selected as the Mask parameter for this channel.
+
+INPUT
+1 text:.txt
+2 image:.tif
+3 image:.tif
+4 image:.tif
+5 image:.tif
+6 image:.tif
+OUTPUT
+1 text:.txt
+PARAMETERS
+The following parameters are defined for each of five input channels:
+Mask - nuclear, energid or outnuc,
+Stat - mean, median, cum, max, min, stdev, var, area or varbc,
+P - one letter label.", 'objstat5', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('solo3','ProStack','prostak -o solo', 1, "txt,tif,tif,tif", "txt", "10;
+Mask 1;choice;3;nuclear;energid;outnuc;
+Stat 1;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 1;int;1;
+Mask 2;choice;3;nuclear;energid;outnuc;
+Stat 2;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 2;int;1;
+Mask 3;choice;3;nuclear;energid;outnuc;
+Stat 3;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 3;int;1;
+Output with 8 bits;bool;%20;-a;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9 $10;", "This operator calculates the given statistical estimator of pixel intensities for each blob, listed in the first input that can be generated by the blob operator. The statistical estimators are calculated for each of three input images – channels (inputs 2 – 6). They are placed in the corresponding column of the output file. The mean value, median value, maximum, minimum, number of pixels, variation or standard deviation can be calculated for blobs (nuclear), their surroundings (outnuc) and the union of them (energid). The ratio of variances in pixel values between and within these two classes (varbc) can be calculated if outnuc is selected as the Mask parameter for this channel.
+
+INPUT
+1 text:.txt
+2 image:.tif
+3 image:.tif
+4 image:.tif
+5 image:.tif
+6 image:.tif
+OUTPUT
+1 text:.txt
+PARAMETERS
+The following parameters are defined for each of three input channels:
+Mask - nuclear, energid or outnuc,
+Stat - mean, median, cum, max, min, stdev, var, area or varbc,
+P - one letter label.", 'objstat3', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility) VALUES ('splitrgb','ProStack','prostak -o splitrgb', 1, "tif", "tif,tif,tif", "N/A", "This operator splits the input color image into three grayscale images, one for each color channel.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif", 'rgbsplit', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, shape, structural_element) VALUES ('strel','ProStack','prostak -o strel', 1, "", "txt", "3;
+Window height;int;3;
+Window width;int;3;
+Shape;choice;2;disk;square;
+
+-s $1,$2,$3;", "This operator generates a structural element file.
+
+INPUT
+0 OUTPUT
+1 text:.txt
+PARAMETERS
+Window width - in pixels,
+Window height - in pixels,
+Shape - disk or square.", 'strel', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, shape, structural_element) VALUES ('vstrel','ProStack','prostak -o vstrel', 1, "txt", "tif", "N/A", "This operator convert structural element to the image.
+
+INPUT
+1 text:.txt
+OUTPUT
+1 image:.tif", 'vstrel', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, shape, compare_shapes) VALUES ('sselect','ProStack','prostak -o sselect', 1, "tif,tif", "tif", "5;
+Max segment;int;100;
+Min segment;int;10;
+Rule;choice;2;accept;reject;
+Criterion;double;0.1;
+Connectivity;choice;2;4;8;
+
+-p $4 -s $1,$2,$3 -r $5;", "This operator filters objects in the binary image according to the shape. The template is provided in the second input as the binary image. The comparison is insensitive to the rotation, translation and scaling.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Max segment - maximal number of pixels in the object,
+Min segment - minimal number of pixels in the object,
+Rule - accept or reject,
+Criterion - maximal allowed error,
+Connectivity - 4 or 8.", 'shapeselect', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, segmentation, threshold, threshold_both, adaptive, statistical) VALUES ('threshold','ProStack','prostak -o threshold', 1, "tif", "tif,txt", "3;
+Threshold level;double;10.0;
+Method;choice;2;plain;otsu;
+Process?;bool;-r 1;-r 0;
+
+-p $1 -s $2 $3;", "This operator generates a binary image by thresholding the input image. Pixel values greater than the cutoff value are set to 255 in the output image. Pixel values less or equal to the cutoff are set to 0. The cutoff value can be specified by a user or calculated by Otsu’s method, which chooses the threshold to minimize the intraclass variance of black and white pixels [3]. Second output gives the actual threshold used.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+2 text:.txt
+PARAMETERS
+Threshold level - the threshold value,
+Method - plain or otsu,
+Process? - do actual transformation or not.", 'threshold', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, segmentation, threshold, threshold_both, adaptive, statistical) VALUES ('hystthresh','ProStack','prostak -o hystthresh', 1, "tif", "tif", "4;
+Low Threshold;double;10.0;
+High Threshold;double;20.0;
+Segment;int;10;
+Connectivity;choice;2;4;8;
+
+-s $1,$2,$3,$4;", "This operator generates a binary image by thresholding the input image with hysteresis.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Low Threshold;double;10.0;
+High Threshold;double;20.0;
+Segment;int;10;
+Connectivity;choice;2;4;8;", 'hystthresh', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, segmentation, threshold, threshold_both, adaptive, statistical) VALUES ('hystthresh3d','ProStack','prostak -o hystthresh3d', 1, "tif", "tif", "4;
+Low Threshold;double;10.0;
+High Threshold;double;20.0;
+Segment;int;10;
+Connectivity;choice;2;6;26;
+
+-s $1,$2,$3,$4;", "This operator generates a binary image by thresholding the input image with hysteresis.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Low Threshold;double;10.0;
+High Threshold;double;20.0;
+Segment;int;10;
+Connectivity;choice;2;6;26;", 'hystthresh3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, orientation, rotate) VALUES ('turn','ProStack','prostak -o turn', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator rotates image to a given angle (second input) that can be calculated by the rotate (see 8.126) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'rotate', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, transform) VALUES ('vvarbc','ProStack','prostak -o vvarbc', 1, "tif,txt", "txt", "N/A", "This operator calculates the ratio variancies of pixel values in the first input between and within two classes. The pixels of the first class belong to blobs, the second class includes all the pixels that belong to surroundings. The second input is the list of blobs and can be calculated by the blob operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 text:.txt", 'vvarbc', 2, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('blob','ProStack','prostak -o blob', 1, "tif,tif", "txt", "4;
+Minimal number of pixels;int;1;
+Maximal number of pixels;int;100;
+Maximal number of blobs;int;1000;
+Connectivity;choice;2;4;8;
+
+-s $1,$2,$3 -r $4;", "Contiguous regions of 'on' pixels surrounded by 'off' pixels (blobs) are stored in the output as the list of pixel indices. The limits are checked for the number of pixels in the region. The number of blobs is also limited. If the input images are different the first is treated as the image of domains each of which contains not more than one blob. The list of pixel indices for the domains containing blobs is also stored in the output. This makes it possible to attach the information of the surroundings to the blobs.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 text:.txt
+PARAMETERS
+Minimal number of pixels
+Maximal number of pixels
+Maximal number of blobs", 'objextr', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, extract, regional_maxima) VALUES ('regmax','ProStack','prostak -o regmax', 1, "tif", "tif", "4;
+Minimal number of pixels;int;1;
+Maximal number of pixels;int;100;
+Maximal number of blobs;int;1000;
+Connectivity;choice;2;4;8;
+
+-s $2,$1,$3,$4;", "This operator finds regional maxima.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Minimal number of pixels - Minimal number of pixels in the object,
+Maximal number of pixels - Maximal number of pixels in the object,
+Minimal number of blobs - Minimal number of objects,
+Connectivity - 4 or 8.", 'regionmax', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, extract, regional_minima) VALUES ('regmin','ProStack','prostak -o regmin', 1, "tif", "tif", "4;
+Minimal number of pixels;int;1;
+Maximal number of pixels;int;100;
+Maximal number of blobs;int;1000;
+Connectivity;choice;2;4;8;
+
+-s $2,$1,$3,$4;", "This operator finds regional minima.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Minimal number of pixels - Minimal number of pixels in the object,
+Maximal number of pixels - Maximal number of pixels in the object,
+Minimal number of blobs - Minimal number of objects,
+Connectivity - 4 or 8.", 'regionmin', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, segmentation, threshold, threshold_both) VALUES ('threshb','ProStack','prostak -o threshb', 1, "tif,txt", "tif", "N/A", "This operator generates a binary image by thresholding the input image. Pixel values greater than the cutoff value are set to 255 in the output image. Pixel values less or equal to the cutoff are set to 0. The cutoff value is calculated by Otsu’s method in each blob contained in the second input. Otsu’s method chooses the threshold to minimize the intraclass variance of black and white pixels [3].
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'objthresh', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, measure, dimensions) VALUES ('m_ar_plus','ProStack','prostak -o m_ar_plus', 0, "txt", "txt", "4;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+
+-s $1,$2,$3,$4;", "This operator sums up the image dimensions that are given by a string of four numbers which are the distances measured in pixels from the image center to its borders. The dimensions can be calculated by the halfsizes (see 8.61) operator.
+
+INPUT
+1 text:.txt
+OUTPUT
+1 text:.txt
+PARAMETERS
+Upper offset - number of pixels to add at the top,
+Lower offset - number of pixels to add at the bottom,
+Left offset - number of pixels to add at the left,
+Right offset - number of pixels to add at the right.", 'man_ar_plus', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, measure, dimensions) VALUES ('m_ar_x','ProStack','prostak -o m_ar_x', 0, "txt", "txt", "4;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+
+-s $1,$2,$3,$4;", "This operator multiplies the image dimensions given by a string of four numbers which are the distances measured in pixels from the image center to its borders. The dimensions can be calculated by the halfsizes (see 8.61) operator. The constant is defined as a parameter.
+
+INPUT
+1 text:.txt
+OUTPUT
+1 text:.txt
+PARAMETERS
+Upper offset - multiplier for the number of pixels to add at the top,
+Lower offset - multiplier for the number of pixels to add at the bottom,
+Left offset - multiplier for the number of pixels to add at the left,
+Right offset - multiplier for the number of pixels to add at the right.", 'man_ar_x', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility) VALUES ('apee3d','ProStack','prostak -o apee3d', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator applies the rules to put the image of Drosophila embryo into standard orientation. These rules are generated by the align operator.
+
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'apee3d', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, extract, watershed_transform, watershed) VALUES ('cwtsd3d','ProStack','prostak -o cwtsd3d', 1, "tif", "tif", "1;
+Connectivity;choice;2;6;26;
+
+-r $1;", "This operator makes a watershed transformation of an input image. The connectivity can be defined as a parameter.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Connectivity - defines the neighborhood: 6 or 26.", 'cwtsd3d', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, extract, watershed_transform, watershed) VALUES ('querode','ProStack','prostak -o querode', 1, "tif", "tif", "2;
+Connectivity;choice;2;6;26;
+Iterations;int;1;
+
+-r $1 -s $2;", "This operator makes a watershed transformation of an input image. The connectivity can be defined as a parameter.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Connectivity - defines the neighborhood: 6 or 26.", 'querode', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, extract, watershed_transform, watershed) VALUES ('quthicken','ProStack','prostak -o quthicken', 1, "tif", "tif", "2;
+Connectivity;choice;2;6;26;
+Iterations;int;1;
+
+-r $1 -s $2;", "This operator makes a watershed transformation of an input image. The connectivity can be defined as a parameter.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Connectivity - defines the neighborhood: 6 or 26.", 'quthicken', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, errors, despeckle, correction, denoising) VALUES ('despekle3d','ProStack','prostak -o despekle3d', 1, "tif", "tif", "1;
+Iterations;int;1;
+
+-r $1;", "This operator reduces the intensity of salt and pepper noise in an image using the Crimmins complementary hulling algorithm [1]. This algorithm smoothes the image by reducing the magnitude of locally inconsistent pixels, as well as by increasing the magnitude of pixels in the neighbourhood surrounding a spike. The spike is defined here as a pixel whose value is different from its surroundings by more than 2 intensity levels. Increasing number of iterations of the algorithm can introduce an effect of blurring of the image. In the ultimate case all sharp gradients will be smoothed down to a magnitude of 2 intensity levels. case
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Iterations - number of sweeps.", 'despeckle3d', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, extract, distance_transform, transform, intensity) VALUES ('distance3d','ProStack','prostak -o distance3d', 1, "tif", "tif", "1;
+Window;choice;3;3;5;7;
+
+-r $1;", "This operator replaces the value of each pixel in the input image by the Euclidean distance from this pixel to the nearest 'off' pixel. The Window parameter defines the size (in pixels) of the neighbourhood of the pixel under consideration used in calculations.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Window- defines the approximation of the distance measure.", 'distance3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, segmentation, detect_edges, edges) VALUES ('edge3d','ProStack','prostak -o edge3d', 1, "tif", "tif", "7;
+a1;double;0.76543;
+a2;double;0.76543;
+Low threshold;double;3;
+High threshold;double;12;
+Window;int;11;
+Segment;int;11;
+Connectivity;choice;2;6;26;
+
+-s $1,$2,$3,$4,$5,$6,$7;", "This operator detects the edges of objects in the input image using the Shen-Castan Detector [5, 6].
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+a1, a2 - parameters of the Infinite Symmetric Exponential Filter (ISEF), 0 < a1 < 1, 0 < a2 < 1.
+Low threshold - the minimal value of gradient magnitude,
+High threshold - the maximal minimal value of gradient magnitude,
+Window - size of window to calculate the magnitude of gradient,
+Segment - minimal number of pixels in the edge segment. The width or height of a window cannot be an even number,
+Connectivity - 6 or 26-neighborhood.", 'edge3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, scale) VALUES ('expand3d','ProStack','prostak -o expand3d', 1, "tif", "tif", "1;
+Scale from 1;double;2.0;
+
+-p $1;", "This operator increases the size of the input image using the pixel replication.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Scale - the scale factor.", 'expand3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, dilation) VALUES ('gdilation3d','ProStack','prostak -o gdilation3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator does successive dilations of the input image by the structural element supplied as the second input. The structural element can be calculated by the strel3d (see 8.140) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions - number of sweeps.", 'dilation3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, open) VALUES ('gopen3d','ProStack','prostak -o gopen3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator performs morphological opening which is the erosion followed by dilation using the structural element supplied as the second input. The structural element can be calculated by the strel3d (see 8.140) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions - number of sweeps.", 'opening3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, close) VALUES ('gclose3d','ProStack','prostak -o gclose3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator performs morphological closing which is the dilation followed by erosion using the structural element supplied as the second input. The structural element can be calculated by the strel3d (see 8.140) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions - number of sweeps.", 'closing3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry) VALUES ('geometry3d','ProStack','prostak -o geometry3d', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator reduces dimensions of the input image. It crops pixels from each side of the image. The number of pixels is defined in the second input that can be generated by the crop (see 8.22) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'geometry3d', 2, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, erosion) VALUES ('gerosion3d','ProStack','prostak -o gerosion3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator does successive erosions of the input image by the structural element supplied as the second input. The structural element can be calculated by the strel3d (see 8.140) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions - number of sweeps.", 'erosion3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, local_histogram_equalization, correction, contrast) VALUES ('lheq3d','ProStack','prostak -o lheq3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator performs histogram equalization separately for each pixel using the neighborhood defined by the structural element from the second input. The structural element can be calculated by the strel3d (see 8.140) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions- number of sweeps.", 'histeqloc3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, combination, pixelwise, maximum) VALUES ('max3d','ProStack','prostak -o max3d', 1, "tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator computes pixel by pixel maximum of the images in the stack.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'max3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, crop) VALUES ('mcrop3d','ProStack','prostak -o geometry3d', 1, "tif", "tif", "6;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;", "This operator reduces the dimensions of the input image. It crops the defined number of pixels from the each side of the image.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Upper offset - number of pixels to crop from the top,
+Lower offset - number of pixels to crop from the bottom,
+Left offset - number of pixels to crop from the left,
+Right offset - number of pixels to crop from the right.", 'crop3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, correction, smoothing, median) VALUES ('median3d','ProStack','prostak -o median3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "This operator computes a two dimensional median filter of a structural element over the given image. The structural element comes from the second input.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions- number of sweeps.", 'median3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, pad) VALUES ('mpad3d','ProStack','prostak -o pad3d', 1, "tif", "tif", "6;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;", "This operator expands the dimensions of the input image. It adds the given number of pixels from the each side of the image.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Upper offset - number of pixels to add from the top,
+Lower offset - number of pixels to add from the bottom,
+Left offset - number of pixels to add from the left,
+Right offset - number of pixels to add from the right.", 'manpad3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, multiply, combination, pixelwise) VALUES ('mul3d','ProStack','prostak -o mul3d', 1, "tif,tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator multiplies each data point in multiplier image by the corresponding data point in input image and returns the product in the corresponding data point of the output image.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'multiply3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, pad) VALUES ('pad3d','ProStack','prostak -o pad3d', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator expands the dimensions of the input image. It adds the pixels to the each side of the image. The number of pixels is defined in the second input that can be generated by the crop (see 8.22) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'pad3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, reconstruct, errors) VALUES ('reconstruct3d','ProStack','prostak -o reconstruct3d', 1, "tif,tif", "tif", "1;
+Connectivity;choice;2;6;26;
+
+-r $1;", "This operator performs morphological reconstruction of the image from the marker image.
+
+INPUT
+1 image:.tif
+2 marker:.tif
+OUTPUT
+1 image:.tif", 'reconstruct3d', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, orientation, reverse_columns) VALUES ('revcol3d','ProStack','prostak -o revcol3d', 1, "tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator reverses columns in the image. Thus the leftmost pixel in each row becomes the rightmost one and so on.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'revcol3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, orientation, reverse_rows) VALUES ('revrow3d','ProStack','prostak -o revrow3d', 1, "tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator reverses rows in the image. Thus the uppermost pixel in each column becomes the lowest and so on.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'revrow3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, scale) VALUES ('shrink3d','ProStack','prostak -o shrink3d', 1, "tif", "tif", "1;
+Scale from 0 to 1;double;0.5;
+
+-p $1;", "This operator reduces the size of the input image using pixel subsampling.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Scale - the scaling factor from 0 to 1.", 'shrink3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility) VALUES ('splitlsm','ProStack','prostak -o splitlsm', 1, "lsm", "tif,tif,tif", "N/A", "This operator splits the input color image into three grayscale images, one for each color channel.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif", 'splitlsm', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, shape, structural_element) VALUES ('strel3d','ProStack','prostak -o strel3d', 1, "", "txt", "5;
+Window height;int;3;
+Window width;int;3;
+Window depth;int;3;
+Shape XY;choice;2;disk;square;
+Shape YZ;choice;2;disk;square;
+
+-s $1,$2,$3,$4,$5;", "This operator generates a structural element file.
+
+INPUT
+0 OUTPUT
+1 text:.txt
+PARAMETERS
+Window width - in pixels,
+Window height - in pixels,
+Window depth - in pixels,
+Shape - disk or square,
+Shape - disk or square.", 'strel3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, shape, structural_element) VALUES ('vstrel3d','ProStack','prostak -o vstrel3d', 1, "txt", "tif", "N/A", "This operator convert structural element to the image.
+
+INPUT
+1 text:.txt
+OUTPUT
+1 image:.tif", 'vstrel3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, orientation, rotate) VALUES ('turn3d','ProStack','prostak -o turn3d', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator rotates image to a given angle (second input) that can be calculated by the rotate (see 8.126) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'rotate3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, unary, complement) VALUES ('invert3d','ProStack','prostak -o invert3d', 1, "tif", "tif", "N/A", "This operator inverts the grayscale values of all pixels in input image.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'invert3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, fill) VALUES ('chole3d','ProStack','prostak -o chole3d', 1, "tif,txt", "tif", "N/A", "This operator fills the regions of 'off' pixels surrounded by 'on' pixels using a structural element. Unclosed contours are erased. The structural element can be calculated by the strel3d (see 8.140) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt - structural element
+OUTPUT
+1 image:.tif", 'chole3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility) VALUES ('maxlsm','ProStack','prostak -o maxlsm', 1, "lsm", "tif", "1;
+Comma separated list;string;0,1,2;
+
+-s $1;", "This operator computes pixel by pixel maximum of the channels in the stack.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Comma separated list - the channels.", 'maxlsm', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility) VALUES ('diglsm','ProStack','prostak -o diglsm', 1, "lsm", "tif", "1;
+Channel;int;0;
+
+-r $1;", "This operator extracts one channel from the multichannel LSM image.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Channel - the channel to extract.", 'diglsm', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, segmentation, threshold, threshold_both, adaptive, statistical) VALUES ('threshold3d','ProStack','prostak -o threshold3d', 1, "tif", "tif,txt", "3;
+Threshold level;double;10.0;
+Method;choice;2;plain;otsu;
+Process?;bool;-r 1;-r 0;
+
+-p $1 -s $2 $3;", "This operator generates a binary image by thresholding the input image. Pixel values greater than the cutoff value are set to 255 in the output image. Pixel values less or equal to the cutoff are set to 0. The cutoff value can be specified by a user or calculated by Otsu’s method, which chooses the threshold to minimize the intraclass variance of black and white pixels [3]. Second output gives the actual threshold used.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+2 text:.txt
+PARAMETERS
+Threshold level - the threshold value,
+Method - plain or otsu,
+Process? - do actual transformation or not.", 'threshold3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, shape, compare_shapes) VALUES ('sselect3d','ProStack','prostak -o sselect3d', 1, "tif,tif", "tif", "5;
+Max segment;int;100;
+Min segment;int;10;
+Rule;choice;2;accept;reject;
+Criterion;double;0.1;
+Connectivity;choice;2;6;26;
+
+-p $4 -s $1,$2,$3 -r Аи$5;", "This operator filters objects in the binary image according to the shape. The template is provided in the second input as the binary image. The comparison is insensitive to the rotation, translation and scaling.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Max segment - maximal number of pixels in the object,
+Min segment - minimal number of pixels in the object,
+Rule - accept or reject,
+Criterion - maximal allowed error,
+Connectivity - 6 or 26.", 'shapeselect3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, misc, utility, morphology) VALUES ('vtxt','ProStack','prostak -o vtxt', 1, "tif", "txt", "2;
+Format;choice;2;xyz;vrml_sphere;
+Connectivity;choice;2;6;26;
+
+-s $1 -r $2;", "This operator converts the binary image stack to the text file.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 text:.txt
+PARAMETERS
+Format - XYZ or VRML,
+Connectivity - 6 or 26.", 'vobjextr', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, reconstruct, errors) VALUES ('rec3dbp','ProStack','prostak -o rec3dbp', 1, "tif,tif", "tif", "2;
+Connectivity;choice;2;6;26;
+Plane;int;0;
+
+-r $1 -s $2;", "This operator performs morphological reconstruction of the stack from the marker image. The specified plane of the stack is compared to the marker image.
+
+INPUT
+1 image:.tif
+2 marker:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Connectivity - 6 or 26,
+Plane - the plane of the stack to compare.", 'bpreconstruct3d', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, reconstruct, errors) VALUES ('getp','ProStack','prostak -o getp', 1, "tif", "tif", "1;
+Plane;int;0;
+
+-r $1;", "This operator extracts one plane from the stack.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Plane - the plane to extract.", 'getplane', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, reconstruct, errors) VALUES ('setp','ProStack','prostak -o setp', 1, "tif,tif", "tif", "1;
+Plane;int;0;
+
+-r $1;", "This operator sets one plane in the stack from the second input.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Plane - the plane to set.", 'setplane', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, reconstruct, errors) VALUES ('pbreak','ProStack','prostak -o pbreak', 1, "tif", "tif,tif", "1;
+Plane;int;0;
+
+-r $1;", "This operator breaks volume into two at the selected plane.
+
+
+INPUT
+1 image:.tif
+2 marker:.tif
+OUTPUT
+1 image:.tif", 'breakvolume', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, morphology, force, reconstruct, errors) VALUES ('punite','ProStack','prostak -o punite', 1, "tif,tif", "tif", "N/A", "Объединение плоскостей.
+
+
+INPUT
+1 image:.tif
+2 marker:.tif
+OUTPUT
+1 image:.tif", 'unitevolumes', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, shape, structural_element) VALUES ('strel3dw','ProStack','prostak -o strel3dw', 1, "", "txt", "6;
+Window height;int;3;
+Window width;int;3;
+Window depth;int;3;
+Window wall;int;3;
+ShapeXY;choice;2;disk;square;
+ShapeYZ;choice;2;disk;square;
+
+-s $1,$2,$3,$4,$5,$6;", "This operator generates a structural element file.
+
+INPUT
+0 OUTPUT
+1 text:.txt
+PARAMETERS
+Window width - in pixels,
+Window height - in pixels,
+Window depth - in pixels,
+Window wall - in pixels,
+Shape - disk or square,
+Shape - disk or square.", 'strel3dw', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, scale) VALUES ('restack3d','ProStack','prostak -o restack3d', 1, "tif", "tif", "1;
+Step;int;2;
+
+-r $1;", "This operator removes planes from the stack with the specified step.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Step - planes are removed with this step.", 'remplane', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('surf3d','ProStack','prostak -o surf3d', 1, "tif", "txt", "6;
+Scale column;double;1;
+Scale row;double;1;
+Scale plane;double;1;
+Maximal penalty of edge removal;double;1000;
+Minimal angle;double;1;
+Format;choice;4;vtk;oogl;ooglb;gts;
+
+-s $1,$2,$3,$4,$5,$6;", "This operator produces triangulated surface.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 text:.txt
+PARAMETERS
+Scale column - horizontal scale,
+Scale row - vertical scale,
+Scale plane - scale in z direction,
+Maximal penalty of edge removal - for surface refinement,
+Minimal angle - for surface refinement,
+Format - vtk, oogl, ooglb or gts.", 'surf3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, measure, moments) VALUES ('shape','ProStack','prostak -o shape', 1, "tif", "txt", "N/A", "This operator outputs the description of the shape.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 text:.txt", 'shapeextr', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, measure, moments) VALUES ('shape3d','ProStack','prostak -o shape3d', 1, "tif", "txt", "1;
+Connectivity;choice;2;6;26;
+
+-r $1;", "This operator outputs the description of the shape.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Connectivity - 6 or 26.", 'shapeextr3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, combination, pixelwise, average) VALUES ('vavg','ProStack','prostak -o vavg', 1, "tif,tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;","This operator averages two images pixel by pixel.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'average', 3, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, combination, pixelwise, maximum) VALUES ('vmax','ProStack','prostak -o vmax', 1, "tif,tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "This operator computes pixel by pixel maximum of two input images.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'maximum', 3, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, combination, color, layers, rgbmerge) VALUES ('vrgb','ProStack','prostak -o vrgb', 1, "tif,tif,tif", "tif", "N/A", "This operator combines three grayscale images into one color image.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif
+OUTPUT
+1 image:.tif", 'rgbcomb', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, absolute_difference, combination, pixelwise) VALUES ('vmabs','ProStack','prostak -o vmabs', 1, "tif,tif", "tif", "N/A", "This operator produces the image of the absolute value of differences between pixel values of input images.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'minusabs', 3, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, scale) VALUES ('lv3d','ProStack','prostak -o lv3d', 1, "tif", "tif", "N/A", "This operator rotates the stack around the vertical axis.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'leftview3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, scale) VALUES ('rv3d','ProStack','prostak -o rv3d', 1, "tif", "tif", "N/A", "This operator rotates the stack around the vertical axis in the direction opposite to that used in the lv3d (see 8.71) operator.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'rightview3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, scale) VALUES ('tv3d','ProStack','prostak -o tv3d', 1, "tif", "tif", "N/A", "This operator rotates the stack around the horizontal axis.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'topview3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, scale) VALUES ('zscale3d','ProStack','prostak -o zscale3d', 1, "tif", "tif", "1;
+Scale from 1;double;2.0;
+
+-p $1;", "This operator scales the stack in z direction.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Scale - the scale.", 'zscale3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('qu3d','ProStack','prostak -o qu3d', 1, "tif,tif,txt", "txt", "2;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+
+-r $1 -s $2;", "This operator adds the quantitative data from another channel to the initialized storage. The image to extract data from is passed as the first input. The second input should contain the binary object mask. The initialized storage is supplied in the third input. The storage is initialized by the qu3dinit (see 8.106) operator.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 text:.txt
+OUTPUT
+1 text:.txt
+PARAMETERS
+Connectivity - 6 or 26,
+Tag - String identifier for this channel.", 'quantify3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('quremask','ProStack','prostak -o quremask', 1, "tif,tif,txt", "txt", "2;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+
+-r $1 -s $2;", "This operator adds the number of blob in the 2nd channel as the tag to the quantitative data for the 1st channel to the initialized storage. The 1st and the 2nd input should contain the binary object mask. The initialized storage is supplied in the third input. The storage is initialized by the qu3dinit (see 8.106) operator.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 text:.txt
+OUTPUT
+1 text:.txt
+PARAMETERS
+Connectivity - 6 or 26,
+Tag - String identifier for the mask label.", 'quremask3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('quresort','ProStack','prostak -o quresort', 1, "tif,txt", "txt,tif", "6;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+Index;int;0;
+RefTag;string;refch;
+NewTag;string;newch;
+Ascending;bool;1;0;
+
+-r $1 -s $2,$3,$4,$5,$6;", "This operator adds the number of blob in sorted list.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 text:.txt
+2 image:.tif
+PARAMETERS
+Connectivity - 6 or 26,
+Tag - String identifier for the mask label,
+Index - int,
+RefTag - String identifier,
+NewTag - String identifier.", 'quresort3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('qu3dinit','ProStack','prostak -o qu3d', 1, "tif,tif", "txt", "2;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+
+-r $1 -s $2;", "This operator initializes the storage and adds the quantitative data from one channel. The image to extract data from is passed as the first input. The second input should contain the binary object mask.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 text:.txt
+PARAMETERS
+Connectivity - 6 or 26,
+Tag - String identifier for this channel.", 'quantify3dinit', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('qu3d2csv','ProStack','prostak -o qu3d2csv', 1, "txt", "csv", "N/A", "This operator converts the quantitative data to CSV format.
+
+INPUT
+1 text:.txt
+OUTPUT
+1 text:.txt", 'quantify3d2csv', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, errors, deconvolve) VALUES ('decsup', 'ProStack', 'prostak -o decsup', 1, "tif,txt", "tif", "4;
+Max. num. of iterations;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+
+-s $1,$2,$3,$4;", "This operator performs deconvolution of the input image using Richardson-Lucy algorithm. It reads the initial guess for the PSF parameters from the second input.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Max.num.of iterations - maximal number of iterations.
+Criterion - stopping criterion.
+Lambda - laplace coefficient.
+PSF type - bessel,gauss,exp,ones or confocal_beessel.", 'deconvrl', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, errors, deconvolve) VALUES ('decsup_i', 'ProStack', 'prostak -o decsup', 1, "tif", "tif", "6;
+Max. num. of iterations;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5,$6;", "This operator performs deconvolution of the input image using Richardson-Lucy algorithm. The initial guess for the PSF parameters is provided as the parameters.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Max.num.of iterations - maximal number of iterations.
+Criterion - stopping criterion.
+Lambda - laplace coefficient.
+PSF type - bessel,gauss,exp,ones or confocal_beessel.
+PSF parameter - standard deviation.
+Window - -1 for auto.", 'deconvrl_i', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, errors, deconvolve) VALUES ('decbsup', 'ProStack', 'prostak -o decbsup', 1, "tif,txt", "tif,txt", "5;
+Max. num. of iterations;int;100;
+Max. blind iter.;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+
+-s $1,$2,$3,$4,$5;", "This operator performs a blind deconvolution of the input image. It reads the initial guess for the PSF parameters from the second input. It also prints the PSF approximation in the second output.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+2 text:.txt
+PARAMETERS
+Max.num.of iterations - maximal number of iterations.
+Max.blind iter - maximal number of iterations for each PSF guess.
+Criterion - stopping criterion.
+Lambda - Laplace coefficient.
+PSF type - bessel,gauss,exp,ones or confocal_beessel.", 'deconvrlblind', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, errors, deconvolve) VALUES ('decbsup_i', 'ProStack', 'prostak -o decbsup', 1, "tif", "tif,txt", "7;
+Max. num. of iterations;int;100;
+Max. blind iter.;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5,$6,$7;", "This operator performs a blind deconvolution of the input image. The initial guess for the PSF parameters is provided as the parameters. It also prints the PSF approximation in the second output.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+2 text:.txt
+PARAMETERS
+Max.num.of iterations - maximal number of iterations.
+Max.blind iter - maximal number of iterations for each PSF guess.
+Criterion - stopping criterion.
+Lambda - Laplace coefficient.
+PSF type - bessel,gauss,exp,ones or confocal_beessel.
+PSF parameter - standard deviation.
+Window - -1 for auto.", 'deconvrlblind_i', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, errors, deconvolve, correction, denoising, wiener) VALUES ('decwiener', 'ProStack', 'prostak -o decwiener', 1, "tif,txt", "tif", "4;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+Gamma(sing.red.);double;1.0;
+Alpha(Wiener==1);double;1.0;
+
+-s $1,$2,$3,$4;", "This operator performs deconvolution of the input image using Wiener filter. It reads the initial guess for the PSF parameters from the second input.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Lambda - laplace coefficient.
+PSF type - bessel,gauss,exp,ones or confocal_beessel.
+Gamma - regularization coefficient.
+Alpha - Value 1 corresponds to the classic Wiener filter.", 'deconvw', 2, 1, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, errors, deconvolve, correction, denoising, wiener) VALUES ('decwiener_i', 'ProStack', 'prostak -o decwiener', 1, "tif", "tif", "6;
+Lambda;double;0.01;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Gamma(sing.red.);double;1.0;
+Alpha(Wiener==1);double;1.0;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5,$6;", "This operator performs deconvolution of the input image using Wiener filter. The initial guess for the PSF parameters is provided as the parameters.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Lambda - laplace coefficient.
+PSF type - bessel,gauss,exp,ones or confocal_beessel.
+Gamma - regularization coefficient.
+Alpha - Value 1 corresponds to the classic Wiener filter.
+PSF parameter - standard deviation.
+Window - -1 for auto.", 'deconvw_i', 2, 1, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, errors, deconvolve) VALUES ('dectm', 'ProStack', 'prostak -o dectm', 1, "tif,txt", "tif", "3;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+Gamma(sing.red.);double;1.0;
+
+-s $1,$2,$3;", "This operator performs deconvolution of the input image using Tikhonov-Miller algorithm. It reads the initial guess for the PSF parameters from the second input.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Lambda - laplace coefficient.
+PSF type - bessel,gauss,exp,ones or confocal_beessel.
+Gamma - regularization coefficient.", 'deconvtm', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, errors, deconvolve) VALUES ('dectm_i', 'ProStack', 'prostak -o dectm', 1, "tif", "tif", "5;
+Lambda;double;0.01;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Gamma(sing.red.);double;1.0;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5;", "This operator performs deconvolution of the input image using Tikhonov-Miller algorithm. The initial guess for the PSF parameters is provided as the parameters.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Lambda - laplace coefficient.
+PSF type - bessel,gauss,exp,ones or confocal_beessel.
+Gamma - regularization coefficient.
+PSF parameter - standard deviation.
+Window - -1 for auto.", 'deconvtm_i', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, errors, deconvolve) VALUES ('decinv', 'ProStack', 'prostak -o decinv', 1, "tif,txt", "tif", "3;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+Gamma(sing.red.);double;1.0;
+
+-s $1,$2,$3;", "This operator performs deconvolution of the input image using inverse filter. It reads the initial guess for the PSF parameters from the second input.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Lambda - Laplace coefficient.
+PSF type - bessel,gauss,exp,ones or confocal_beessel.
+Gamma - regularization coefficient.", 'deconvi', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, restoration, errors, deconvolve) VALUES ('decinv_i', 'ProStack', 'prostak -o decinv', 1, "tif", "tif", "5;
+Lambda;double;0.01;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Gamma(sing.red.);double;1.0;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5;", "This operator performs deconvolution of the input image using inverse filter. The initial guess for the PSF parameters is provided as the parameters.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Lambda - Laplace coefficient.
+PSF type - bessel,gauss,exp,ones or confocal_beessel.
+Gamma - regularization coefficient.
+PSF parameter - standard deviation.
+Window - -1 for auto.", 'deconvi_i', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, transform) VALUES ('vvarbc3d','ProStack','prostak -o vvarbc3d', 1, "txt", "txt", "5;
+Output section;string;Statistics;
+Class 1 section;string;Shape:1;
+Class 1 data;string;channel1;
+Class 2 section;string;Shape:2;
+Class 2 data;string;channel2;
+
+-s $1,$2,$3,$4,$5;", "This operator calculates the ratio of variancies of pixel values in the image between and within two classes. The pixels of the first class belong to blobs, the second class includes all the pixels that belong to surroundings. The input is the list of blobs and can be calculated by the qu3dinit (see 8.106) operator.
+
+INPUT
+1 text:.txt
+OUTPUT
+1 text:.txt
+PARAMETERS
+Output section - the name of the output section,
+Class 1 section - the name of the section that describes first class,
+Class 1 data - the string identifier of the data that describes first class,
+Class 2 section - the name of the section that describes second class,
+Class 2 data - the string identifier of the data that describes second class.", 'vvarbc3d', 2, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, transform) VALUES ('vrmbg','ProStack','prostak -o vrmbg', 1, "tif,txt", "tif", "4;
+Bgr mean coeff;double;1.0;
+Bgr section;string;Shape:0;
+Bgr stdev coeff;double;3.0;
+Bgr data;string;channel1;
+
+-s $1,$2,$3,$4;", "This operator removes background signal form the image. Background is to be estimated quantitatively and its mean and standard deviation is to be present in the appropriate section in the second input. The value <Bgr mean coeff>*<bgr mean> + <bgr stdev coeff>*<bgr stdev> is subtracted from each pixel.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Bgr mean coeff - the coefficient for the mean value of background signal,
+Bgr section - the section with measurements in the second input,
+Bgr stdev coeff - the coefficient for the standard deviation,
+Bgr data - the string identifier for the measurements.", 'vrmbg', 2, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, transform) VALUES ('vrmbg_1','ProStack','prostak -o vrmbg', 1, "tif", "tif", "4;
+Bgr mean coeff;double;1.0;
+Bgr mean;double;8.0;
+Bgr stdev coeff;double;3.0;
+Bgr stdev;double;7.0;
+
+-s $1,$2,$3,$4;", "This operator removes background signal form the image. The mean and standard deviation of it is to be provided by the user. The value <Bgr mean coeff>*<bgr mean> + <bgr stdev coeff>*<bgr stdev> is subtracted from each pixel.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Bgr mean coeff - the coefficient for the mean value of background signal,
+Bgr mean - the mean value of background signal,
+Bgr stdev coeff - the coefficient for the standard deviation,
+Bgr stdev - the standard deviation.", 'vrmbg_1', 2, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, mesh) VALUES ('grid','ProStack','prostak -o grid', 1, "tif", "tif", "1;
+Number of bins;int;0;
+
+-r $1;", "This operator produces the image of the cartesian grid.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Number of bins - number of grid cells.", 'grid', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, mesh) VALUES ('grid3d_i','ProStack','prostak -o grid3d', 1, "tif", "tif", "9;
+Type;choice;2;cartesian;elliptical;
+Cell height (% OH);double;1;
+Cell width (% OH);double;1;
+Cell depth (% OH);double;1;
+Offset (% OH);double;0.5;
+Criterion;double;0.01;
+X Center;double;100.0;
+Y Center;double;100.0;
+Z Center;double;100.0;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9;", "This operator produces the image of the grid. The center of the object in the image is entered in the parameter dialog.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Type - type of the grid - cartesian or elliptical.
+Cell height - the height of the cell measured in per cent.
+Cell width - the width of the cell measured in per cent.
+Cell depth - the depth of the cell measured in per cent.
+Offset - the offset of the center of the coordinate system measured in per cent. If set to 0 the center of the image will be the center of the coordinate system, if set to 0.5 the center of the image will be the center of the central cell.
+Criterion - the allowed error.
+X Center - x coordinate of centroid.
+Y Center - y coordinate of centroid.
+Z Center - z coordinate of centroid.", 'grid3d_i', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, mesh) VALUES ('grid3d','ProStack','prostak -o grid3d', 1, "tif,txt", "tif", "7;
+Type;choice;2;cartesian;elliptical;
+Cell height (% OH);double;1;
+Cell width (% OH);double;1;
+Cell depth (% OH);double;1;
+Offset (% OH);double;0.5;
+Criterion;double;0.01;
+Shape section;string;Shape:0;
+
+-s $1,$2,$3,$4,$5,$6,$7;", "This operator produces the image of the grid. The description of the shape is supplied as the second input. It can be produced by the qu3dinit (see 8.106) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Type - type of the grid - cartesian or elliptical.
+Cell height - the height of the cell measured in per cent.
+Cell width - the width of the cell measured in per cent.
+Cell depth - the depth of the cell measured in per cent.
+Offset - the offset of the center of the coordinate system measured in per cent. If set to 0 the center of the image will be the center of the coordinate system, if set to 0.5 the center of the image will be the center of the central cell.
+Criterion - the allowed error.
+Shape section - the name of the section in the second input that describes the shape of the object.", 'grid3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, mesh) VALUES ('qu3dtrans','ProStack','prostak -o qu3dtrans', 1, "txt,txt", "txt", "5;
+Shape section;string;Shape:0;
+Center;bool;1;0;
+Percent;bool;1;0;
+Min Volume;double;20.0;
+Max Volume;double;350.0;
+
+-s $1,$2,$3,$4,$5;", "This operator filters the list of the objects and transforms their coordinates. The second input should contain the description of the shape of the object mask.
+
+INPUT
+1 text:.txt
+2 text:.txt
+OUTPUT
+1 text:.txt
+PARAMETERS
+Shape section - the name of the section that describes the shape of the mask,
+Percent - if set coordinates are converted to the per cent,
+Center - if set coordinates are shifted to the center,
+Min Volume - minimal number of pixels in the object,
+Max Volume - maximal number of pixels in the object.", 'quantify3dtr', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('surf3dfull','ProStack','prostak -o surf3dfull', 1, "tif", "txt", "10;
+Scale column;double;1;
+Scale row;double;1;
+Scale plane;double;1;
+Maximal penalty of edge removal;double;1000;
+Minimal angle;double;1;
+Format;choice;4;vtk;oogl;ooglb;gts;
+Step for y;double;1;
+Step for x;double;1;
+Step for z;double;1;
+Function;choice;4;cartesian;tetra;tetra_bounded;tetra_bcl;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9,$10;", "This operator produces triangulated surface.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 text:.txt
+PARAMETERS
+Scale column - horizontal scale,
+Scale row - vertical scale,
+Scale plane - scale in z direction,
+Maximal penalty of edge removal - for surface refinement,
+Minimal angle - for surface refinement,
+Format - vtk, oogl, ooglb or gts,
+Step x - in pixels,
+Step y - in pixels,
+Step z - in pixels,
+Function - cartesian, tetra, tetra_bounded or tetra_bcl.", 'surf3dfull', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('surf2vol','ProStack','prostak -o surf2vol', 1, "txt", "tif", "N/A", "This operator draws triangulated surface.
+
+INPUT
+1 text:.txt
+OUTPUT
+1 image:.tif", 'surf2vol', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, scale) VALUES ('pump3d','ProStack','prostak -o pump3d', 1, "tif", "tif", "N/A", "This operator converts an image into a stack using the distance map to determine the z coordinate.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'pump3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, geometry, size, scale) VALUES ('pump3d_data','ProStack','prostak -o pump3d', 1, "tif,tif", "tif", "N/A", "This operator converts an image into a stack using the distance map to determine the z coordinate. It also set the intensities in the stack according the second input.
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'pump3ddata', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, mesh) VALUES ('mslice3d','ProStack','prostak -o mslice3d', 1, "tif,txt", "tif", "3;
+Cell step (% OH);double;1;
+Direction;int;2;
+Shape section;string;Shape:0;
+
+-s $3,$1,$2;", "This operator visualizes the distance image supplied as the first input. The shape description is supplied as the second input. The resulting image contains equidistance surfaces.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Cell step - the distance between surfaces measured in per cent,
+Direction - the direction in which steps are made to mark control points,
+Shape section - the name of the section in the second input that describes the shape of the object.", 'mslice3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, mesh) VALUES ('mslicegcp3d','ProStack','prostak -o mslicegcp3d', 1, "tif,txt", "tif", "7;
+Cell step (% OH);double;1;
+Direction;int;2;
+Slice Direction;int;2;
+Shape section;string;Shape:0;
+Cell height (% OH);double;1;
+Cell width (% OH);double;1;
+Cell depth (% OH);double;1;
+
+-s $4,$1,$2,$3,$5,$6,$7;", "This operator finds control points for registration using the distance image. The shape description is supplied as the second input. It works like mslice3d (see 8.91) but steps are made in one direction to produce equidistance surfaces and in the other direction to mark landmarks.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Cell step - the distance between surfaces measured in per cent,
+Direction - the direction in which steps are made,
+Slice direction - the direction in which steps are made,
+Shape section - the name of the section in the second input that describes the shape of the object.
+Cell height - the height of the cell measured in per cent.
+Cell width - the width of the cell measured in per cent.
+Cell depth - the depth of the cell measured in per cent.", 'mslice3dgcp', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, mesh) VALUES ('mlsreg','ProStack','prostak -o mlsreg', 1, "tif,tif,tif", "tif", "2;
+Alpha;double;1;
+Type;choice;3;affine;similar;rigid;
+
+-s $2,$1;", "This operator registers two images using control points and moving least squares method.
+
+INPUT
+1 image:.tif
+2 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Alpha - alpha coefficient,
+Type - affine, similar or rigid.", 'regmls', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('qumark3d', 'ProStack', 'prostak -o qumark3d', 1, "tif", "tif", "1;
+Connectivity;choice;2;6;26;
+
+-r $1;", "This operator collapses the islands of bright pixels in the binary image to exactly one pixel. It is used to refine the landmarks for registration with mlsreg (see 8.85) operator.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'quantify3dmark', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('qumap3d', 'ProStack', 'prostak -o qumap3d', 1, "tif,txt", "tif", "3;
+Connectivity;choice;2;6;26;
+Channel;string;channel1;
+Index;int;1;
+
+-r $1 -s $2,$3;", "This operator paints the binary mask with the intensities from quantitative data. The second input should contain the quantitative data produced by the qu3dinit (see 8.106) or the qu3d (see 8.104) operator.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Connectivity - 6 or 26,
+Channel - String identifier of the channel,
+Index - The number starting from zero that determines the quantity in the list of measurements. Usually 0 means mean value, 1 - variation, 2 - standard deviation, 3 - maximum, 4 - minimum, 5 - median, 6 - sum and 7 - not empty.", 'quantify3dmap', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, mesh) VALUES ('qurelabel','ProStack','prostak -o qurelabel', 1, "tif,txt,tif,tif", "txt", "3;
+Alpha;double;1;
+Type;choice;3;affine;similar;rigid;
+Connectivity;choice;2;6;26;
+
+-s $2,$1 -r $3;", "This operator labels each object in the registered mask with its index in the unregistered mask. Thus it is possible to compare quantitative data extracted from different images using the same mask registered to these images. The unregistered mask is supplied in the first input as binary image. The registered mask is supplied in the second input as the output of the qu3dinit (see 8.106) operator. The third input should contain the landmark of the registered image, and the forth input should contain the landmarks of the unregistered mask.
+
+INPUT
+1 image:.tif
+2 text:.txt
+3 image:.tif
+4 image:.tif
+OUTPUT
+2 text:.txt
+PARAMETERS
+Alpha - alpha coefficient,
+Type - affine, similar or rigid,
+Connectivity - 6 or 26.", 'quantify3drelabel', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, arithmetic, polynary, sum, subtract, multiply, combination, pixelwise) VALUES ('vaff','ProStack','prostak -o vaff', 1, "tif,tif", "tif", "3;
+Coeff 1;double;1.0;
+Coeff 2;double;1.0;
+Coeff 3;double;0.0;
+
+-s $1,$2,$3;", "This operator computes a linear combination of two images pixel by pixel.
+
+Output = <coeff 1> * input_1 + <coeff 2> * input_2 + <coeff 3>;
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Coeff 1,
+Coeff 2,
+Coeff 3.", 'affinecomb', 2, 1, 1, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, object_recognition, quantitative, list_objects) VALUES ('quvu','ProStack','prostak -o quvu', 1, "tif,tif,txt", "txt", "5;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+Cycles;int;3;
+VertLim;int;10;
+Alpha;double;2.0;
+
+-r $1 -s $2,$4,$5 -p $3;", "This operator adds the quantitative data from another channel to the initialized storage. The data extracted is the number of vertices in each cell, so the image should be a cell mask. The image to extract data from is passed as the first input. The second input should contain the binary object mask. The initialized storage is supplied in the third input. The storage is initialized by the qu3dinit (see 8.106) operator.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 text:.txt
+OUTPUT
+1 text:.txt
+PARAMETERS
+Connectivity - 6 or 26,
+Tag - String identifier for this channel.", 'quantify3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, combination, color, layers) VALUES ('movl8','ProStack','prostak -o movl', 1, "tif,tif,tif,tif,tif,tif,tif,tif", "tif", "8;
+Color 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 3;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 4;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 5;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 6;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 7;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 8;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8;", "This operator combines six grayscale images into one color image. The colors for each input can be selected from the list.
+
+INPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif
+4 image:.tif
+5 image:.tif
+6 image:.tif
+7 image:.tif
+8 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Color 1 - color for the first input,
+Color 2 - color for the second input,
+Color 3 - color for the third input,
+Color 4 - color for the fourth input,
+Color 5 - color for the fifth input,
+Color 6 - color for the sixth input,
+Color 7 - color for the fifth input,
+Color 8 - color for the sixth input.", 'colorcomb6', 2, 1, 1, 1);

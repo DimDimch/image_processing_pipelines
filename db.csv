@@ -1,0 +1,841 @@
+align;N/A
+andif;"4;
+Iterations;int;3;
+Time step(<=1);double;0.9;
+Threshold(<1);double;0.9;
+Function type;choice;2;exp;frac;
+
+-s $1,$2,$3,$4;"
+apee;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+apsc;"1;
+Direction;choice;2;A;P;
+
+-s $1;"
+ar_minus;N/A
+ar_plus;N/A
+ar_x;"1;
+Value;double;1;
+
+-p $1;"
+avg;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+avg2;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+blo2pol;N/A
+bolb;N/A
+bolin;"1;
+Index;int;0;
+
+-r $1;"
+chemar;N/A
+chole;N/A
+crop;N/A
+cwtsd;"1;
+Connectivity;choice;2;4;8;
+
+-r $1;"
+despekle;"1;
+Iterations;int;1;
+
+-r $1;"
+distance;"1;
+Window;choice;3;3;5;7;
+
+-r $1;"
+edge;"7;
+a1;double;0.76543;
+a2;double;0.76543;
+Low threshold;double;3;
+High threshold;double;12;
+Window;int;11;
+Segment;int;11;
+Connectivity;choice;2;4;8;
+
+-s $1,$2,$3,$4,$5,$6,$7;"
+expand;"1;
+Scale from 1;double;2.0;
+
+-p $1;"
+fill;"1;
+Connectivity;choice;2;4;8;
+
+-r $1;"
+gdilation;"1;
+Repetitions;int;1;
+
+-r $1;"
+gopen;"1;
+Repetitions;int;1;
+
+-r $1;"
+gclose;"1;
+Repetitions;int;1;
+
+-r $1;"
+geometry;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+gerosion;"1;
+Repetitions;int;1;
+
+-r $1;"
+gmag;N/A
+halfsizes;N/A
+heqm;N/A
+heq;N/A
+hno;N/A
+hues;N/A
+invert;N/A
+lev;"1;
+Index;int;0;
+
+-r $1;"
+lheq;"1;
+Repetitions;int;1;
+
+-r $1;"
+lhbg;
+mask;N/A
+max;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+max2;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+mcrop;"6;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;"
+median;"1;
+Repetitions;int;1;
+
+-r $1;"
+match;N/A
+minusabs;N/A
+movl2;"2;
+Color 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2;"
+movl3;"3;
+Color 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 3;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2,$3;"
+movl6;"6;
+Color 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 3;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 4;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 5;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 6;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2,$3,$4,$5,$6;"
+mpad;"6;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;"
+mul;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+pad;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+plot_sp;"2;
+Increment;int;1;
+Function;choice;2;log;eqn;
+
+-r $1 -s $2;"
+ppix;"6;
+ac;double;1.0;
+bc;double;0.0;
+ar;double;1.0;
+br;double;0.0;
+t0;double;0.0;
+tN;double;1.0;
+
+-s $1,$2,$3,$4,$5,$6;"
+raw;"3;
+Columns;int;1024;
+Rows;int;1024;
+Bps;choice;1;8;
+
+-s $1,$2,$3;"
+reconstruct;"1;
+Connectivity;choice;2;4;8;
+
+-r $1;"
+revcol;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+revrow;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+robel;N/A
+rogri;"2;
+Number of bins;int;0;
+Accuracy;double;0.01;
+
+-r $1 -p $2;"
+ropol;"1;
+Function;choice;2;log;eqn;
+
+-s $1;"
+ropri;N/A
+rotate;N/A
+shrink;"1;
+Scale from 0 to 1;double;0.5;
+
+-p $1;"
+solo;"16;
+Mask 1;choice;3;nuclear;energid;outnuc;
+Stat 1;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 1;int;1;
+Mask 2;choice;3;nuclear;energid;outnuc;
+Stat 2;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 2;int;1;
+Mask 3;choice;3;nuclear;energid;outnuc;
+Stat 3;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 3;int;1;
+Mask 4;choice;3;nuclear;energid;outnuc;
+Stat 4;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 4;int;1;
+Mask 5;choice;3;nuclear;energid;outnuc;
+Stat 5;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 5;int;1;
+Output with 8 bits;bool;%20;-a;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15 $16;"
+solo3;"10;
+Mask 1;choice;3;nuclear;energid;outnuc;
+Stat 1;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 1;int;1;
+Mask 2;choice;3;nuclear;energid;outnuc;
+Stat 2;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 2;int;1;
+Mask 3;choice;3;nuclear;energid;outnuc;
+Stat 3;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 3;int;1;
+Output with 8 bits;bool;%20;-a;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9 $10;"
+splitrgb;N/A
+strel;"3;
+Window height;int;3;
+Window width;int;3;
+Shape;choice;2;disk;square;
+
+-s $1,$2,$3;"
+vstrel;N/A
+sselect;"5;
+Max segment;int;100;
+Min segment;int;10;
+Rule;choice;2;accept;reject;
+Criterion;double;0.1;
+Connectivity;choice;2;4;8;
+
+-p $4 -s $1,$2,$3 -r $5;"
+threshold;"3;
+Threshold level;double;10.0;
+Method;choice;2;plain;otsu;
+Process?;bool;-r 1;-r 0;
+
+-p $1 -s $2 $3;"
+hystthresh;"4;
+Low Threshold;double;10.0;
+High Threshold;double;20.0;
+Segment;int;10;
+Connectivity;choice;2;4;8;
+
+-s $1,$2,$3,$4;"
+hystthresh3d;"4;
+Low Threshold;double;10.0;
+High Threshold;double;20.0;
+Segment;int;10;
+Connectivity;choice;2;6;26;
+
+-s $1,$2,$3,$4;"
+turn;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+vvarbc;N/A
+blob;"4;
+Minimal number of pixels;int;1;
+Maximal number of pixels;int;100;
+Maximal number of blobs;int;1000;
+Connectivity;choice;2;4;8;
+
+-s $1,$2,$3 -r $4;"
+regmax;"4;
+Minimal number of pixels;int;1;
+Maximal number of pixels;int;100;
+Maximal number of blobs;int;1000;
+Connectivity;choice;2;4;8;
+
+-s $2,$1,$3,$4;"
+regmin;"4;
+Minimal number of pixels;int;1;
+Maximal number of pixels;int;100;
+Maximal number of blobs;int;1000;
+Connectivity;choice;2;4;8;
+
+-s $2,$1,$3,$4;"
+threshb;N/A
+m_ar_plus;"4;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+
+-s $1,$2,$3,$4;"
+m_ar_x;"4;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+
+-s $1,$2,$3,$4;"
+apee3d;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+cwtsd3d;"1;
+Connectivity;choice;2;6;26;
+
+-r $1;"
+querode;"2;
+Connectivity;choice;2;6;26;
+Iterations;int;1;
+
+-r $1 -s $2;"
+quthicken;"2;
+Connectivity;choice;2;6;26;
+Iterations;int;1;
+
+-r $1 -s $2;"
+despekle3d;"1;
+Iterations;int;1;
+
+-r $1;"
+distance3d;"1;
+Window;choice;3;3;5;7;
+
+-r $1;"
+edge3d;"7;
+a1;double;0.76543;
+a2;double;0.76543;
+Low threshold;double;3;
+High threshold;double;12;
+Window;int;11;
+Segment;int;11;
+Connectivity;choice;2;6;26;
+
+-s $1,$2,$3,$4,$5,$6,$7;"
+expand3d;"1;
+Scale from 1;double;2.0;
+
+-p $1;"
+gdilation3d;"1;
+Repetitions;int;1;
+
+-r $1;"
+gopen3d;"1;
+Repetitions;int;1;
+
+-r $1;"
+gclose3d;"1;
+Repetitions;int;1;
+
+-r $1;"
+geometry3d;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+gerosion3d;"1;
+Repetitions;int;1;
+
+-r $1;"
+lheq3d;"1;
+Repetitions;int;1;
+
+-r $1;"
+max3d;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+mcrop3d;"6;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;"
+median3d;"1;
+Repetitions;int;1;
+
+-r $1;"
+mpad3d;"6;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;"
+mul3d;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+pad3d;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+reconstruct3d;"1;
+Connectivity;choice;2;6;26;
+
+-r $1;"
+revcol3d;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+revrow3d;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+shrink3d;"1;
+Scale from 0 to 1;double;0.5;
+
+-p $1;"
+splitlsm;N/A
+strel3d;"5;
+Window height;int;3;
+Window width;int;3;
+Window depth;int;3;
+Shape;choice;2;disk;square;
+Shape;choice;2;disk;square;
+
+-s $1,$2,$3,$4,$5;"
+vstrel3d;N/A
+turn3d;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+invert3d;N/A
+chole3d;N/A
+maxlsm;"1;
+Comma separated list;string;0,1,2;
+
+-s $1;"
+diglsm;"1;
+Channel;int;0;
+
+-r $1;"
+threshold3d;"3;
+Threshold level;double;10.0;
+Method;choice;2;plain;otsu;
+Process?;bool;-r 1;-r 0;
+
+-p $1 -s $2 $3;"
+sselect3d;"5;
+Max segment;int;100;
+Min segment;int;10;
+Rule;choice;2;accept;reject;
+Criterion;double;0.1;
+Connectivity;choice;2;6;26;
+
+-p $4 -s $1,$2,$3 -r $5;"
+vtxt;"2;
+Format;choice;2;xyz;vrml_sphere;
+Connectivity;choice;2;6;26;
+
+-s $1 -r $2;"
+rec3dbp;"2;
+Connectivity;choice;2;6;26;
+Plane;int;0;
+
+-r $1 -s $2;"
+getp;"1;
+Plane;int;0;
+
+-r $1;"
+setp;"1;
+Plane;int;0;
+
+-r $1;"
+pbreak;"1;
+Plane;int;0;
+
+-r $1;"
+punite;N/A
+strel3dw;"6;
+Window height;int;3;
+Window width;int;3;
+Window depth;int;3;
+Window wall;int;3;
+Shape;choice;2;disk;square;
+Shape;choice;2;disk;square;
+
+-s $1,$2,$3,$4,$5,$6;"
+restack3d;"1;
+Step;int;2;
+
+-r $1;"
+surf3d;"6;
+Scale column;double;1;
+Scale row;double;1;
+Scale plane;double;1;
+Maximal penalty of edge removal;double;1000;
+Minimal angle;double;1;
+Format;choice;4;vtk;oogl;ooglb;gts;
+
+-s $1,$2,$3,$4,$5,$6;"
+shape;N/A
+shape3d;"1;
+Connectivity;choice;2;6;26;
+
+-r $1;"
+vavg;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+vmax;"2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;"
+vrgb;N/A
+vmabs;N/A
+lv3d;N/A
+rv3d;N/A
+tv3d;N/A
+zscale3d;"1;
+Scale from 1;double;2.0;
+
+-p $1;"
+qu3d;"2;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+
+-r $1 -s $2;"
+quremask;"2;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+
+-r $1 -s $2;"
+quresort;"6;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+Index;int;0;
+RefTag;string;refch;
+NewTag;string;newch;
+Ascending;bool;1;0;
+
+-r $1 -s $2,$3,$4,$5,$6;"
+qu3dinit;"2;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+
+-r $1 -s $2;"
+qu3d2csv;N/A
+decsup;"4;
+Max. num. of iterations;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+
+-s $1,$2,$3,$4;"
+decsup_i;"6;
+Max. num. of iterations;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5,$6;"
+decbsup;"5;
+Max. num. of iterations;int;100;
+Max. blind iter.;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+
+-s $1,$2,$3,$4,$5;"
+decbsup_i;"7;
+Max. num. of iterations;int;100;
+Max. blind iter.;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5,$6,$7;"
+decwiener;"4;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+Gamma(sing.red.);double;1.0;
+Alpha(Wiener==1);double;1.0;
+
+-s $1,$2,$3,$4;"
+decwiener_i;"6;
+Lambda;double;0.01;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Gamma(sing.red.);double;1.0;
+Alpha(Wiener==1);double;1.0;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5,$6;"
+dectm;"3;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+Gamma(sing.red.);double;1.0;
+
+-s $1,$2,$3;"
+dectm_i;"5;
+Lambda;double;0.01;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Gamma(sing.red.);double;1.0;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5;"
+decinv;"3;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+Gamma(sing.red.);double;1.0;
+
+-s $1,$2,$3;"
+decinv_i;"5;
+Lambda;double;0.01;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Gamma(sing.red.);double;1.0;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5;"
+vvarbc3d;"5;
+Output section;string;Statistics;
+Class 1 section;string;Shape:1;
+Class 1 data;string;channel1;
+Class 2 section;string;Shape:2;
+Class 2 data;string;channel2;
+
+-s $1,$2,$3,$4,$5;"
+vrmbg;"4;
+Bgr mean coeff;double;1.0;
+Bgr section;string;Shape:0;
+Bgr stdev coeff;double;3.0;
+Bgr data;string;channel1;
+
+-s $1,$2,$3,$4;"
+vrmbg_1;"4;
+Bgr mean coeff;double;1.0;
+Bgr mean;double;8.0;
+Bgr stdev coeff;double;3.0;
+Bgr stdev;double;7.0;
+
+-s $1,$2,$3,$4;"
+grid;"1;
+Number of bins;int;0;
+
+-r $1;"
+grid3d_i;"9;
+Type;choice;2;cartesian;elliptical;
+Cell height (% OH);double;1;
+Cell width (% OH);double;1;
+Cell depth (% OH);double;1;
+Offset (% OH);double;0.5;
+Criterion;double;0.01;
+X Center;double;100.0;
+Y Center;double;100.0;
+Z Center;double;100.0;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9;"
+grid3d;"7;
+Type;choice;2;cartesian;elliptical;
+Cell height (% OH);double;1;
+Cell width (% OH);double;1;
+Cell depth (% OH);double;1;
+Offset (% OH);double;0.5;
+Criterion;double;0.01;
+Shape section;string;Shape:0;
+
+-s $1,$2,$3,$4,$5,$6,$7;"
+qu3dtrans;"5;
+Shape section;string;Shape:0;
+Center;bool;1;0;
+Percent;bool;1;0;
+Min Volume;double;20.0;
+Max Volume;double;350.0;
+
+-s $1,$2,$3,$4,$5;"
+surf3dfull;"10;
+Scale column;double;1;
+Scale row;double;1;
+Scale plane;double;1;
+Maximal penalty of edge removal;double;1000;
+Minimal angle;double;1;
+Format;choice;4;vtk;oogl;ooglb;gts;
+Step for y;double;1;
+Step for x;double;1;
+Step for z;double;1;
+Function;choice;4;cartesian;tetra;tetra_bounded;tetra_bcl;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9,$10;"
+surf2vol;N/A
+pump3d;N/A
+pump3d_data;N/A
+mslice3d;"3;
+Cell step (% OH);double;1;
+Direction;int;2;
+Shape section;string;Shape:0;
+
+-s $3,$1,$2;"
+mslicegcp3d;"7;
+Cell step (% OH);double;1;
+Direction;int;2;
+Slice Direction;int;2;
+Shape section;string;Shape:0;
+Cell height (% OH);double;1;
+Cell width (% OH);double;1;
+Cell depth (% OH);double;1;
+
+-s $4,$1,$2,$3,$5,$6,$7;"
+mlsreg;"2;
+Alpha;double;1;
+Type;choice;3;affine;similar;rigid;
+
+-s $2,$1;"
+qumark3d;"1;
+Connectivity;choice;2;6;26;
+
+-r $1;"
+qumap3d;"3;
+Connectivity;choice;2;6;26;
+Channel;string;channel1;
+Index;int;1;
+
+-r $1 -s $2,$3;"
+qurelabel;"3;
+Alpha;double;1;
+Type;choice;3;affine;similar;rigid;
+Connectivity;choice;2;6;26;
+
+-s $2,$1 -r $3;"
+vaff;"3;
+Coeff 1;double;1.0;
+Coeff 2;double;1.0;
+Coeff 3;double;0.0;
+
+-s $1,$2,$3;"
+quvu;"5;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+Cycles;int;3;
+VertLim;int;10;
+Alpha;double;2.0;
+
+-r $1 -s $2,$4,$5 -p $3;"
+movl8;"8;
+Color 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 3;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 4;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 5;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 6;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 7;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+Color 8;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8;"
+convert;"1;
+Channel;string;R;
+
+-depth 8 -channel $1 -separate;"
+thinning;"1;
+Iterations;int;-1;
+
+-depth 8 -morphology Thinning:$1 Diagonals -morphology Thinning Corners;"
+correlate;"2;
+Radius;int;0;
+Sigma;double;1.0;
+
+-define convolve:scale=""1^"" -morphology Correlate Gaussian:$1x$2 -depth 8;"
+LoG;"2;
+Radius;int;0;
+Sigma;double;1.0;
+
+-define -morphology Convolve LoG:$1,$2 -depth 8;"
+DoG;"3;
+Radius;int;0;
+Sigma 1;double;1.0;
+Sigma 2;double;1.5;
+
+-define -morphology Convolve DoG:$1,$2,$3 -depth 8;"
+imcanny;"4;
+Radius;double;0;
+Sigma;double;1;
+Low frac;double;0.1;
+Upper frac;string;0.3;
+
+$1x$2+$3+$4 -depth 8;"
+lat;"1;
+Радиус;int;10;
+
+$1 -depth 8;"
+laplacian;"3;
+Type;int;0;
+Scale;string;-1!;
+Bias;double;0.5;
+
+-define convolve:scale=""$2"" -bias $3 -morphology Convolve Laplacian:$1;"

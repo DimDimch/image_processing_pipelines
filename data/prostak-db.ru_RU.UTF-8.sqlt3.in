@@ -1,0 +1,1273 @@
+INSERT OR REPLACE INTO Packages (Name, Version, APIChanged)  VALUES ('ProStack','@PACKAGE_VERSION@',1);
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('andif','0.0.0','$1,$2,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('apee','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('apsc','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('ar_x','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('bolin','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('cwtsd','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('despekle','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('distance','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('edge','0.0.0','$1,$2,$3,$4,$5,$6,$7');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('expand','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('fill','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('lev','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('mcrop','0.0.0','$5 $6 $1,$2,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('movl2','0.0.0','$1,$2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('movl3','0.0.0','$1,$2,$3');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('movl6','0.0.0','$1,$2,$3,$4,$5,$6');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('mpad','0.0.0','$5 $6 $1,$2,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('m_ar_x','0.0.0','$1,$2,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('m_ar_plus','0.0.0','$1,$2,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('mul','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('pad','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('plot_sp','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('ppix','0.0.0','$1,$2,$3,$4,$5,$6');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('raw','0.0.0','$1,$2,$3');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('revcol','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('revrow','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('rogri','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('ropol','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('shrink','0.0.0','$1');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('solo','0.0.0','$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('solo3','0.0.0','$1,$2,$3,$4,$5,$6,$7,$8,$9');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('strel','0.0.0','$1,$2,$3');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('sselect','0.0.0','-p $4 -s $1,$2,$3 -r $5');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('threshold','0.0.0','-p $1 -s $2 $3');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('turn','0.0.0','$1 $2');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('blob','0.0.0','$1,$2,$3');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('regmax','0.0.0','$2,$1,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('regmin','0.0.0','$2,$1,$3,$4');
+INSERT OR REPLACE INTO Compat (Name, Version, API) VALUES ('reconstruct','0.0.0','');
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты) VALUES ('align','ProStack','prostak -o align', 1, "tif", "txt", "N/A", "Этот оператор создает правила
+для перевода изображения эмбриона дрозофилы в стандартную ориентацию.
+", 'align', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Ошибки, Коррекция, Контраст, Анизотропическая_диффузия) VALUES ('andif','ProStack','prostak -o andif', 1, "tif", "tif", "4;
+Итераций;int;3;
+Шаг по времени(<=1);double;0.9;
+Пороговый фильтр(<1);double;0.9;
+Тип функции;choice;2;exp;frac;
+
+-s $1,$2,$3,$4;", "Удаление шума с помощью УЧП", 'andif', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты) VALUES ('apee','ProStack','prostak -o apee', 1, "tif,txt", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Этот оператор применяет правила для перевода изображения эмбриона дрозофилы в стандартную ориентацию.", 'apee', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты) VALUES ('apsc','ProStack','pprostak -o apsc', 1, "txt,txt", "txt", "1;
+Направление;choice;2;A;P;
+
+-s $1;", "Этот оператор проверяет правила для перевода изображения эмбриона дрозофилы в стандартную ориентацию.", 'apsc', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Измерить, Размеры, Геометрия) VALUES ('ar_minus','ProStack','prostak -o ar_minus', 1, "txt,txt", "txt", "N/A", "Этот оператор вычисляет разность размеров изображений,
+представленных как расстояние в пикселях от центра до границ", 'ar_minus', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Измерить, Размеры, Геометрия) VALUES ('ar_plus','ProStack','prostak -o ar_plus', 1, "txt,txt", "txt", "N/A", "Этот оператор вычисляет сумму размеров изображений,
+представленных как расстояние в пикселях от центра до границ", 'ar_plus', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Измерить, Размеры, Геометрия) VALUES ('ar_x','ProStack','prostak -o ar_x', 0, "txt", "txt", "1;
+Значение;double;1;
+
+-p $1;", "Этот оператор вычисляет произведение размеров изображений,
+представленных как расстояние в пикселях от центра до границ, на константу", 'ar_x', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Комбинация, Попиксельно, Среднее) VALUES ('avg','ProStack','prostak -o avg', 1, "tif,tif,tif", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Этот оператор попиксельное среднее", 'average3', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Комбинация, Попиксельно, Среднее) VALUES ('avg2','ProStack','prostak -o avg', 1, "tif,tif", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Этот оператор попиксельное среднее", 'average', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка_в_полярных_координатах) VALUES ('blo2pol','ProStack','prostak -o blo2pol', 1, "tif,txt", "txt", "N/A", "Этот оператор переводит координаты объектов в
+полярные координаты", 'blo2pol', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Свойства, Нарисовать_объекты) VALUES ('bolb','ProStack','prostak -o bolb', 1, "txt", "tif", "N/A", "Этот оператор восстанавливает маску по списку объектов", 'bolb', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Свойства, Нарисовать_объекты) VALUES ('bolin','ProStack','prostak -o bolin', 1, "txt", "tif", "1;
+Индекс;int;0;
+
+-r $1;", "Этот оператор восстанавливает маску одного объекта.", 'bolin', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты) VALUES ('chemar','ProStack','prostak -o chemar', 1, "tif", "txt", "N/A", "Этот оператор вычисляет среднюю интенсивность в левой и правой части изображения", 'chemar', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Заполнение) VALUES ('chole','ProStack','prostak -o chole', 1, "tif,txt", "tif", "N/A", "Этот оператор заполняет обведенные контуры", 'chole', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Обрезать) VALUES ('crop','ProStack','prostak -o crop', 1, "tif", "tif,txt", "N/A", "Этот оператор обрезает края изображения так, чтобы все объекты полностью сохранились", 'crop', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Извлечь, Преобразование_водораздела, Водораздел) VALUES ('cwtsd','ProStack','prostak -o cwtsd', 1, "tif", "tif", "1;
+Связность;choice;2;4;8;
+
+-r $1;", "Сегментация двумерных изображений методом водоотлива.
+Области изображения, соответствующие объектам, помечаются
+единицей и разделяются линиями границы, толщиной в один
+пиксел и помеченными нулем.", 'cwtsd', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Ошибки, Деспекл, Коррекция, Удаление_шума) VALUES ('despekle','ProStack','prostak -o despekle', 1, "tif", "tif", "1;
+Итерации;int;1;
+
+-r $1;", "Этот оператор удаляет шум по Кримминсу (Crimmins)", 'despeckle', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Извлечь, Преобразование_расстояния, Преобразование, Интенсивность) VALUES ('distance','ProStack','prostak -o distance', 1, "tif", "tif", "1;
+Окно;choice;3;3;5;7;
+
+-r $1;", "Этот оператор выполняет преобразование расстояния.", 'distance', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Сегментация, Определение_границ, Границы) VALUES ('edge','ProStack','prostak -o edge', 1, "tif", "tif", "7;
+a1;double;0.76543;
+a2;double;0.76543;
+Нижний порог;double;3;
+Верхний порог;double;12;
+Окно;int;11;
+Сегмент;int;11;
+Связность;choice;2;4;8;
+
+-s $1,$2,$3,$4,$5,$6,$7;", "Этот оператор выделяет контуры объектов по алгоритму Шена и Кастана (Shen-Castan)", 'edge', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Масштаб) VALUES ('expand','ProStack','prostak -o expand', 1, "tif", "tif", "1;
+Масштаб от 1;double;2.0;
+
+-p $1;", "Этот оператор масштабирует изображение.", 'expand', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Заполнение) VALUES ('fill','ProStack','prostak -o fill', 1, "tif", "tif", "1;
+Связность;choice;2;4;8;
+
+-r $1;", "Этот оператор заполняет контуры", 'fill', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Расширение) VALUES ('gdilation','ProStack','prostak -o gdilation', 1, "tif,txt", "tif", "1;
+Повторений;int;1;
+
+-r $1;", "Этот оператор расширения.", 'dilation', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Размыкание) VALUES ('gopen','ProStack','prostak -o gopen', 1, "tif,txt", "tif", "1;
+Повторений;int;1;
+
+-r $1;", "Этот оператор размыкания.", 'opening', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Замыкание) VALUES ('gclose','ProStack','prostak -o gclose', 1, "tif,txt", "tif", "1;
+Повторений;int;1;
+
+-r $1;", "Этот оператор размыкания.", 'closing', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия) VALUES ('geometry','ProStack','prostak -o geometry', 1, "tif,txt", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Этот оператор обрезает заданное число пикселей по краям", 'geometry', 2, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Сужение) VALUES ('gerosion','ProStack','prostak -o gerosion', 1, "tif,txt", "tif", "1;
+Повторений;int;1;
+
+-r $1;", "Этот оператор сужения", 'erosion', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Извлечь, Значение_градиента, Определение_границ, Преобразование, Интенсивность) VALUES ('gmag','ProStack','prostak -o gmag', 1, "tif", "tif", "N/A", "Этот оператор вычисляет абсолютное значение градиента.", 'gradientmagnitude', 2, 1, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Измерить, Размеры, Геометрия) VALUES ('halfsizes','ProStack','prostak -o halfsizes', 1, "tif", "txt", "N/A", "Этот оператор вычисляет размеры изображения как расстояние в пикселях от центра до краев", 'halfsizes', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Коррекция, Контраст, Выравнивание_гистограммы) VALUES ('heqm','ProStack','prostak -o heq', 1, "tif,tif", "tif", "N/A", "Этот оператор выравнивает гистограмму с учетом маски", 'histeqmask', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Коррекция, Контраст, Выравнивание_гистограммы) VALUES ('heq','ProStack','prostak -o heq', 1, "tif", "tif", "N/A", "Этот оператор выравнивает гистограмму", 'histeq', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Коррекция, Контраст, Выравнивание_гистограммы) VALUES ('hno','ProStack','prostak -o hno', 1, "tif", "tif", "N/A", "Этот оператор нормализует гистограмму", 'histnorm', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты) VALUES ('hues','ProStack','prostak -o hues', 1, "tif,tif,tif", "tif", "N/A", "Этот оператор объединяет цветовые каналы в одно изображение", 'hues', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Унарный, Дополнение) VALUES ('invert','ProStack','prostak -o invert', 1, "tif", "tif", "N/A", "Этот оператор обращает изображение", 'invert', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Сегментация, Пороговый_фильтр, Жесткий) VALUES ('lev','ProStack','prostak -o lev', 1, "tif", "tif", "1;
+Индекс;int;0;
+
+-r $1;", "Выделяет пиксели с заданной интенсивностью", 'level', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Локальное_выравнивание_гистограммы, Коррекция, Контраст) VALUES ('lheq','ProStack','prostak -o lheq', 1, "tif,txt", "tif", "1;
+Повторений;int;1;
+
+-r $1;", "Этот оператор локальное выравнивание гистограммы", 'histeqloc', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Коррекция, Контраст) VALUES ('lhbg','ProStack','prostak -o lhbg', 1, "tif,txt", "tif", "", "Этот оператор локальное выравнивание гистограммы", 'bg', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Комбинация, Попиксельно) VALUES ('mask','ProStack','prostak -o mask', 1, "tif,tif", "tif", "N/A", "Этот оператор выполняет маскирование изображения", 'mask', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Комбинация, Попиксельно, Максимум) VALUES ('max','ProStack','prostak -o max', 1, "tif,tif,tif", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Этот оператор вычисляет попиксельный максимум", 'maximum3', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Комбинация, Попиксельно, Максимум) VALUES ('max2','ProStack','prostak -o max', 1, "tif,tif", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Этот оператор вычисляет попиксельный максимум", 'maximum', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Обрезать) VALUES ('mcrop','ProStack','prostak -o geometry', 1, "tif", "tif", "6;
+Верхний отступ;int;1;
+Нижний отступ;int;1;
+Левый отступ;int;1;
+Правый отступ;int;1;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;", "Этот оператор удаляет заданное количество пикселей по краям", 'mancrop', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Коррекция, Сглаживание, Медиана) VALUES ('median','ProStack','prostak -o median', 1, "tif,txt", "tif", "1;
+Повторений;int;1;
+
+-r $1;", "Этот оператор применяет медианный фильтр", 'median', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Извлечь) VALUES ('match','ProStack','prostak -o match', 1, "tif,txt", "tif", "N/A", "Этот оператор сравнивает объекты", 'match', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Абсолютная_разность, Комбинация, Попиксельно) VALUES ('minusabs','ProStack','prostak -o minusabs', 1, "tif,tif", "tif", "N/A", "Этот оператор вычисляет абсолютное значение разности", 'minusabs', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Комбинация, Цвет, Слои) VALUES ('movl2','ProStack','prostak -o movl', 1, "tif,tif", "tif", "2;
+цвет 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2;", "Каждый пиксел результирующего изображения получает значение, соответствующие интенсивности во входных изображениях и цвету, заданному для этого изображения.", 'colorcomb2', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Комбинация, Цвет, Слои, RGBслияние) VALUES ('movl3','ProStack','prostak -o movl', 1, "tif,tif,tif", "tif", "3;
+цвет 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 3;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2,$3;", "Каждый пиксел результирующего изображения получает значение, соответствующие интенсивности во входных изображениях и цвету, заданному для этого изображения.", 'colorcomb3', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Комбинация, Цвет, Слои) VALUES ('movl6','ProStack','prostak -o movl', 1, "tif,tif,tif,tif,tif,tif", "tif", "6;
+цвет 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 3;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 4;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 5;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 6;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2,$3,$4,$5,$6;", "Каждый пиксел результирующего изображения получает значение, соответствующие интенсивности во входных изображениях и цвету, заданному для этого изображения.", 'colorcomb6', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Добавить) VALUES ('mpad','ProStack','prostak -o pad', 1, "tif", "tif", "6;
+Верхний отступ;int;1;
+Нижний отступ;int;1;
+Левый отступ;int;1;
+Правый отступ;int;1;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;", "Этот оператор добавляет заданное значение пикселей по краям", 'manpad', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Произведение, Комбинация, Попиксельно) VALUES ('mul','ProStack','prostak -o mul', 1, "tif,tif", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Этот оператор вычисляет произведение", 'multiply', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Добавить) VALUES ('pad','ProStack','prostak -o pad', 1, "tif,txt", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Этот оператор добавляет заданное значение пикселей по краям", 'pad', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Линейный_график) VALUES ('plot_sp','ProStack','prostak -o plot_sp', 1, "tif", "txt", "2;
+Шаг;int;1;
+Функция;choice;2;log;eqn;
+
+-r $1 -s $2;", "Этот оператор печатает значения пикселей", 'plot_sp', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Линейный_график) VALUES ('ppix','ProStack','prostak -o ppix', 1, "tif", "txt,tif", "6;
+ac;double;1.0;
+bc;double;0.0;
+ar;double;1.0;
+br;double;0.0;
+t0;double;0.0;
+tN;double;1.0;
+
+$1,$2,$3,$4,$5,$6;", "Этот оператор печатает значения пикселей вдоль прямой.
+ac - наклон параметрической функции для столбца,
+bc - сдвиг параметрической функции для столбца,
+ar - наклон параметрической функции для строки,
+br - сдвиг параметрической функции для строки,
+t0 - нижний предел парамтра,
+tN - верхний предел парамтра.", 'plotpixels', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты) VALUES ('raw','ProStack','prostak -o raw', 1, "tif", "tif", "3;
+Столбцов;int;1024;
+Строк;int;1024;
+Разрешение;int;8;
+
+$1,$2,$3;", "Этот оператор создает tiff по raw", 'raw', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Реконструкция, Ошибки) VALUES ('reconstruct','ProStack','prostak -o reconstruct', 1, "tif,tif", "tif", "1;
+Connectivity;choice;2;4;8;
+
+-r $1;", "Этот оператор морфологической реконструкции", 'reconstruct', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Ориентация, Обратить_столбцы) VALUES ('revcol','ProStack','prostak -o revcol', 1, "tif", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Зеркальное отражение", 'revcol', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Ориентация, Обратить_строки) VALUES ('revrow','ProStack','prostak -o revrow', 1, "tif", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Зеркальное отражение", 'revrow', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка_в_полярных_координатах) VALUES ('robel','ProStack','prostak -o robel', 1, "tif,tif,txt", "tif", "N/A", "Этот оператор создает кольцо, содержащее все объекты", 'robel', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка_в_полярных_координатах) VALUES ('rogri','ProStack','prostak -o rogri', 1, "tif,tif", "tif", "2;
+Число интервалов;int;0;
+Точность;double;0.01;
+
+-r $1 -p $2;", "Этот оператор делит на секторы", 'rogri', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка_в_полярных_координатах) VALUES ('ropol','ProStack','prostak -o ropol', 1, "tif,tif,tif", "txt", "1;
+Функция;choice;2;log;eqn;
+
+-s $1;", "Этот оператор печатает значения пикселей", 'ropol', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка_в_полярных_координатах) VALUES ('ropri','ProStack','prostak -o ropri', 1, "tif,txt", "txt", "N/A", "Этот оператор вычисляет границы областей для построения кольца", 'ropri', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Ориентация, Поворот) VALUES ('rotate','ProStack','prostak -o rotate', 1, "tif", "tif,txt", "N/A", "Этот оператор поворота", 'anglerotate', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Масштаб) VALUES ('shrink','ProStack','prostak -o shrink', 1, "tif", "tif", "1;
+Масштаб от 0 до 1;double;0.5;
+
+-p $1;", "Этот оператор масштабирования", 'shrink', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('solo','ProStack','prostak -o solo', 1, "txt,tif,tif,tif,tif,tif", "txt", "16;
+Маска 1;choice;3;nuclear;energid;outnuc;
+Тип 1;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 1;int;1;
+Маска 2;choice;3;nuclear;energid;outnuc;
+Тип 2;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 2;int;1;
+Маска 3;choice;3;nuclear;energid;outnuc;
+Тип 3;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 3;int;1;
+Маска 4;choice;3;nuclear;energid;outnuc;
+Тип 4;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 4;int;1;
+Маска 5;choice;3;nuclear;energid;outnuc;
+Тип 5;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 5;int;1;
+Вывод 8 бит;bool;%20;-a;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15 $16;", "Перевод изображения в текстовый файл количественных данных.
+Каждому объекту, выделенному сегментацией, ставятся
+в соответствие числовые характеристики, как то:
+координаты в процентном отношении от размеров изображения,
+средняя интенсивность по объекту.", 'objstat5', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('solo3','ProStack','prostak -o solo', 1, "txt,tif,tif,tif", "txt", "10;
+Маска 1;choice;3;nuclear;energid;outnuc;
+Тип 1;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 1;int;1;
+Маска 2;choice;3;nuclear;energid;outnuc;
+Тип 2;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 2;int;1;
+Маска 3;choice;3;nuclear;energid;outnuc;
+Тип 3;choice;9;mean;median;muc;max;min;stdev;var;area;varbc;
+P 3;int;1;
+Вывод 8 бит;bool;%20;-a;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9 $10;", "Перевод изображения в текстовый файл количественных данных.
+Каждому объекту, выделенному сегментацией, ставятся
+в соответствие числовые характеристики, как то:
+координаты в процентном отношении от размеров изображения,
+средняя интенсивность по объекту.", 'objstat3', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты) VALUES ('splitrgb','ProStack','prostak -o splitrgb', 1, "tif", "tif,tif,tif", "N/A", "Этот оператор записывает каждый цветовой канал в отдельный файл", 'rgbsplit', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Форма, Структурный_элемент) VALUES ('strel','ProStack','prostak -o strel', 1, "", "txt", "3;
+Высота окна;int;3;
+Ширина окна;int;3;
+форма;choice;2;disk;square;
+
+-s $1,$2,$3;", "Этот оператор создает структурный элемент", 'strel', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Форма, Структурный_элемент) VALUES ('vstrel','ProStack','prostak -o vstrel', 1, "txt", "tif", "N/A", "Этот оператор создает изображение структурного элемента", 'vstrel', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Форма, Сравнить_формы) VALUES ('sselect','ProStack','prostak -o sselect', 1, "tif,tif", "tif", "5;
+Максимальный сегментt;int;100;
+Минимальный сегмент;int;10;
+Правило;choice;2;accept;reject;
+Критерий;double;0.1;
+Связность;choice;2;4;8;
+
+-p $4 -s $1,$2,$3 -r $5;", "В сегментированном изображении 
+могут присутствовать объекты различной природы, а также артефакты.
+С другой стороны, некоторые характеристики интересующих объектов,
+как то: форма или характерный размер, могут быть известны
+a priori и позволяют создать шаблон объекта, что позволяет
+найти в изображении наиболее близкие по своим характеристикам
+объекты. Объекты, не соответствующие шаблону удаляются из изображения.
+Объект может быть охарактеризован набором моментов и инвариантов
+сдвига, растяжения и поворота, тогда сходство объектов определяется
+как евклидово расстояние между их векторами харатеристик. Если расстояние
+меньше заданной точности, то объекты считаются сходными.", 'shapeselect', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Сегментация, Пороговый_фильтр, Порог, Адаптивный, Статистический) VALUES ('threshold','ProStack','prostak -o threshold', 1, "tif", "tif,txt", "3;
+Порог;double;10.0;
+Метод;choice;2;plain;otsu;
+Применить?;bool;-r 1;-r 0;
+
+-p $1 -s $2 $3;", "Пороговый фильтр", 'threshold', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Сегментация, Пороговый_фильтр, Порог, Адаптивный, Статистический) VALUES ('hystthresh','ProStack','prostak -o hystthresh', 1, "tif", "tif", "4;
+Low Threshold;double;10.0;
+High Threshold;double;20.0;
+Segment;int;10;
+Connectivity;choice;2;4;8;
+
+-s $1,$2,$3,$4;", "Пороговый фильтр с гистерезисом.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Low Threshold;double;10.0;
+High Threshold;double;20.0;
+Segment;int;10;
+Connectivity;choice;2;4;8;", 'hystthresh', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Сегментация, Пороговый_фильтр, Порог, Адаптивный, Статистический) VALUES ('hystthresh3d','ProStack','prostak -o hystthresh3d', 1, "tif", "tif", "4;
+Low Threshold;double;10.0;
+High Threshold;double;20.0;
+Segment;int;10;
+Connectivity;choice;2;6;26;
+
+-s $1,$2,$3,$4;", "Пороговый фильтр с гистерезисом.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Low Threshold;double;10.0;
+High Threshold;double;20.0;
+Segment;int;10;
+Connectivity;choice;2;6;26;", 'hystthresh3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Ориентация, Поворот) VALUES ('turn','ProStack','prostak -o turn', 1, "tif,txt", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Поворот изображения на заданный угол", 'rotate', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Преобразование) VALUES ('vvarbc','ProStack','prostak -o vvarbc', 1, "tif,txt", "txt", "N/A", "Этот оператор вычисляет отношение вариаций
+значений пикселей в первом входе между и внутри классов", 'vvarbc', 2, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('blob','ProStack','prostak -o blob', 1, "tif,tif", "txt", "4;
+Минимальное число пикселей;int;1;
+Максимальное число пикселей;int;100;
+Максимальное число объектов;int;1000;
+Связность;choice;2;4;8;
+
+-s $1,$2,$3 -r $4;", "Этот оператор составляет список объектов по маске", 'objextr', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Извлечь, Локальные_максимумы) VALUES ('regmax','ProStack','prostak -o regmax', 1, "tif", "tif", "4;
+Минимальное число пикселей;int;1;
+Максимальное число пикселей;int;100;
+Максимальное число объектов;int;1000;
+Связность;choice;2;4;8;
+
+-s $2,$1,$3,$4;", "Этот оператор выделяет региональные максимумы", 'regionmax', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Извлечь, Локальные_минимумы) VALUES ('regmin','ProStack','prostak -o regmin', 1, "tif", "tif", "4;
+Минимальное число пикселей;int;1;
+Максимальное число пикселей;int;100;
+Максимальное число объектов;int;1000;
+Связность;choice;2;4;8;
+
+-s $2,$1,$3,$4;", "Этот оператор выделяет региональные минимумы", 'regionmin', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Сегментация, Пороговый_фильтр, Порог) VALUES ('threshb','ProStack','prostak -o threshb', 1, "tif,txt", "tif", "N/A", "Локальный пороговый фильтр", 'objthresh', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Измерить, Размеры) VALUES ('m_ar_plus','ProStack','prostak -o m_ar_plus', 0, "txt", "txt", "4;
+Верхний отступ;int;1;
+Нижний отступ;int;1;
+Левый отступ;int;1;
+Правый отступ;int;1;
+
+-s $1,$2,$3,$4;", "Этот оператор вычисляет сумму полуразмеров", 'man_ar_plus', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Измерить, Размеры) VALUES ('m_ar_x','ProStack','prostak -o m_ar_x', 0, "txt", "txt", "4;
+Верхний отступ;int;1;
+Нижний отступ;int;1;
+Левый отступ;int;1;
+Правый отступ;int;1;
+
+-s $1,$2,$3,$4;", "Этот оператор вычисляет произведение полуразмеров", 'man_ar_x', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты) VALUES ('apee3d','ProStack','prostak -o apee3d', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "Этот оператор применяет правила для перевода изображения эмбриона дрозофилы в стандартную ориентацию.
+
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'apee3d', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Извлечь, Преобразование_водораздела, Водораздел) VALUES ('cwtsd3d','ProStack','prostak -o cwtsd3d', 1, "tif", "tif", "1;
+Connectivity;choice;2;6;26;
+
+-r $1;", "Этот оператор выполняет watershed преобразование входного изображения.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Connectivity - defines the neighborhood: 6 or 26.", 'cwtsd3d', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Извлечь, Преобразование_водораздела, Водораздел) VALUES ('querode','ProStack','prostak -o querode', 1, "tif", "tif", "2;
+Connectivity;choice;2;6;26;
+Iterations;int;1;
+
+-r $1 -s $2;", "Этот оператор выполняет watershed преобразование входного изображения.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Connectivity - defines the neighborhood: 6 or 26.", 'querode', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Извлечь, Преобразование_водораздела, Водораздел) VALUES ('quthicken','ProStack','prostak -o quthicken', 1, "tif", "tif", "2;
+Connectivity;choice;2;6;26;
+Iterations;int;1;
+
+-r $1 -s $2;", "Этот оператор выполняет watershed преобразование входного изображения.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Connectivity - defines the neighborhood: 6 or 26.", 'quthicken', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Ошибки, Деспекл, Коррекция, Удаление_шума) VALUES ('despekle3d','ProStack','prostak -o despekle3d', 1, "tif", "tif", "1;
+Iterations;int;1;
+
+-r $1;", "Этот оператор уменьшает интенсивность шума соли и перца в
+изображении с использованием дополнительного алгоритма
+шелушения Crimmins. This algorithm smoothes the image by
+reducing the magnitude of locally inconsistent pixels, as well as by
+increasing the magnitude of pixels in the neighbourhood surrounding
+a spike. The spike is defined here as a pixel whose value is
+different from its surroundings by more than 2 intensity levels.
+Increasing number of iterations of the algorithm can introduce an effect 
+of blurring of the image. In the ultimate case all sharp gradients will be 
+smoothed down to a magnitude of 2 intensity levels.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Iterations - number of sweeps.", 'despeckle3d', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Извлечь, Преобразование_расстояния, Преобразование, Интенсивность) VALUES ('distance3d','ProStack','prostak -o distance3d', 1, "tif", "tif", "1;
+Window;choice;3;3;5;7;
+
+-r $1;", "Этот оператор заменяет значение каждого пикселя во входном изображении на евклидово расстояние от этого пикселя до ближайшего выключенного пикселя.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Window- defines the approximation of the distance measure.", 'distance3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Сегментация, Определение_границ, Границы) VALUES ('edge3d','ProStack','prostak -o edge3d', 1, "tif", "tif", "7;
+a1;double;0.76543;
+a2;double;0.76543;
+Low threshold;double;3;
+High threshold;double;12;
+Window;int;11;
+Segment;int;11;
+Connectivity;choice;2;6;26;
+
+-s $1,$2,$3,$4,$5,$6,$7;", "Этот оператор обнаруживает края объектов на входном изображении с помощью Shen-Castan Detector.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+a1, a2 - parameters of the Infinite Symmetric Exponential Filter (ISEF), 0 < a1 < 1, 0 < a2 < 1.
+Low threshold - the minimal value of gradient magnitude,
+High threshold - the maximal minimal value of gradient magnitude,
+Window - size of window to calculate the magnitude of gradient,
+Segment - minimal number of pixels in the edge segment. The width or height of a window cannot be an even number,
+Connectivity - 4 or 8-neighborhood", 'edge3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Масштаб) VALUES ('expand3d','ProStack','prostak -o expand3d', 1, "tif", "tif", "1;
+Scale from 1;double;2.0;
+
+-p $1;", "Этот оператор увеличивает размер входного изображения, используя репликацию пикселей.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Scale - the scale factor.", 'expand3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Расширение) VALUES ('gdilation3d','ProStack','prostak -o gdilation3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "Этот оператор выполняет последовательное расширение входного изображения структурным элементом, подаваемым в качестве второго входного сигнала.
+
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions - number of sweeps.", 'dilation3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Размыкание) VALUES ('gopen3d','ProStack','prostak -o gopen3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "Этот оператор выполняет морфологическое открывание, которое представляет собой эрозию с последующим расширением, используя структурный элемент, поставляемый в качестве второго входа.
+
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions - number of sweeps.", 'opening3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Замыкание) VALUES ('gclose3d','ProStack','prostak -o gclose3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "Этот оператор выполняет морфологическое закрытие, которое представляет собой расширение с последующей эрозией, используя структурный элемент, поставляемый в качестве второго входного сигнала.
+
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions - number of sweeps.", 'closing3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Обрезать) VALUES ('geometry3d','ProStack','prostak -o geometry3d', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "Этот оператор уменьшает размеры входного изображения.
+
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'geometry3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Сужение) VALUES ('gerosion3d','ProStack','prostak -o gerosion3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "Этот оператор выполняет последовательное размывание входного изображения структурным элементом, поставляемым в качестве второго входного сигнала.
+
+NAME
+gerosion - Erosion.
+
+PROGRAM NAME
+prostak -o erosion
+
+DESCRIPTION
+This operator does N successive erosions of the input image 
+by the structural element from the second input.
+
+USAGE
+prostak -o erosion -m <structural element file> -r <number of sweeps> <input binary file name> <output file name>
+
+ProStack command
+prostak -m <structural element file> | -s <vertical size, horizontal size, type> -r <number of sweeps> erosion <input file name> <output file name>
+
+INPUT
+1 image:.tif
+2 text:.txt
+
+OUTPUT
+1 image:.tif
+
+PARAMETERS
+
+Repetitions - number of sweeps", 'erosion3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Локальное_выравнивание_гистограммы, Коррекция, Контраст) VALUES ('lheq3d','ProStack','prostak -o lheq3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "Этот оператор выполняет выравнивание гистограммы отдельно для каждого пикселя, используя окрестности, определенные структурным элементом из второго ввода.
+
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions- number of sweeps", 'histeqloc3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Комбинация, Попиксельно, Максимум) VALUES ('max3d','ProStack','prostak -o max3d', 1, "tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "Этот оператор вычисляет попиксельный максимум изображений в стэке.
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'max3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Обрезать) VALUES ('mcrop3d','ProStack','prostak -o geometry3d', 1, "tif", "tif", "6;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;", "Этот оператор уменьшает размеры входного изображения.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Upper offset - number of pixels to crop from the top,
+Lower offset - number of pixels to crop from the bottom,
+Left offset - number of pixels to crop from the left,
+Right offset - number of pixels to crop from the right.", 'crop3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Коррекция, Сглаживание, Медиана) VALUES ('median3d','ProStack','prostak -o median3d', 1, "tif,txt", "tif", "1;
+Repetitions;int;1;
+
+-r $1;", "Этот оператор вычисляет двумерный медианный фильтр структурного элемента по заданному изображению.
+
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif
+PARAMETERS
+Repetitions- number of sweeps", 'median3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Добавить) VALUES ('mpad3d','ProStack','prostak -o pad3d', 1, "tif", "tif", "6;
+Upper offset;int;1;
+Lower offset;int;1;
+Left offset;int;1;
+Right offset;int;1;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$5 $6 -s $1,$2,$3,$4;", "Этот оператор увеличивает размеры входного изображения.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Upper offset - number of pixels to add from the top,
+Lower offset - number of pixels to add from the bottom,
+Left offset - number of pixels to add from the left,
+Right offset - number of pixels to add from the right.", 'manpad3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Произведение, Комбинация, Попиксельно) VALUES ('mul3d','ProStack','prostak -o mul3d', 1, "tif,tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "Этот оператор умножает каждую точку данных в изображении мультипликатора на соответствующую точку данных во входном изображении и возвращает произведение в соответствующей точке данных выходного изображения.
+
+
+INPUT
+1 image:.tif
+2 image:.tif
+OUTPUT
+1 image:.tif", 'multiply3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Добавить) VALUES ('pad3d','ProStack','prostak -o pad3d', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "Этот оператор увеличивает размеры входного изображения.
+
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'pad3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Реконструкция, Ошибки) VALUES ('reconstruct3d','ProStack','prostak -o reconstruct3d', 1, "tif,tif", "tif", "1;
+Connectivity;choice;2;6;26;
+
+-r $1;", "Этот оператор выполняет морфологическую реконструкцию изображения по маркеру.
+
+
+INPUT
+1 image:.tif
+2 marker:.tif
+OUTPUT
+1 image:.tif", 'reconstruct3d', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Ориентация, Обратить_столбцы) VALUES ('revcol3d','ProStack','prostak -o revcol3d', 1, "tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "Этот оператор переворачивает столбцы на изображении.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'revcol3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Ориентация, Обратить_строки) VALUES ('revrow3d','ProStack','prostak -o revrow3d', 1, "tif", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "Этот оператор переворачивает строки на изображении.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'revrow3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Масштаб) VALUES ('shrink3d','ProStack','prostak -o shrink3d', 1, "tif", "tif", "1;
+Scale from 0 to 1;double;0.5;
+
+-p $1;", "Этот оператор уменьшает размер входного изображения с помощью субдискретизации пикселей.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Scale - the scaling factor from 0 to 1.", 'shrink3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты) VALUES ('splitlsm','ProStack','prostak -o splitlsm', 1, "lsm", "tif,tif,tif", "N/A", "Этот оператор разбивает входное цветное изображение на три изображения в оттенках серого, по одному для каждого цветового канала.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif", 'splitlsm', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Форма, Структурный_элемент) VALUES ('strel3d','ProStack','prostak -o strel3d', 1, "", "txt", "5;
+Window height;int;3;
+Window width;int;3;
+Window depth;int;3;
+Shape XY;choice;2;disk;square;
+Shape YZ;choice;2;disk;square;
+
+-s $1,$2,$3,$4,$5;", "Этот оператор генерирует файл структурного элемента.
+
+
+INPUT
+0
+OUTPUT
+1 text:.txt
+PARAMETERS
+Window width - in pixels,
+Window height - in pixels,
+Shape - disk or square.", 'strel3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Форма, Структурный_элемент) VALUES ('vstrel3d','ProStack','prostak -o vstrel3d', 1, "txt", "tif", "N/A", "Этот оператор преобразует структурный элемент в изображение.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 text:.txt
+
+The format of an output file:
+
+
+<alighn>
+transpose or - if not needed
+reversecolumn or - if not needed
+reverserows or - if not needed
+</alighn>", 'vstrel3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Ориентация, Поворот) VALUES ('turn3d','ProStack','prostak -o turn3d', 1, "tif,txt", "tif", "2;
+Don't assume 12 bits;bool;%20;-b;
+Output with 8 bits;bool;%20;-a;
+
+$1 $2;", "Этот оператор поворачивает изображение на заданный угол (второй ввод), который может быть вычислен оператором поворота.
+
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 image:.tif", 'rotate3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Унарный, Дополнение) VALUES ('invert3d','ProStack','prostak -o invert3d', 1, "tif", "tif", "N/A", "Этот оператор инвертирует значения оттенков серого всех пикселей во входном изображении.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'invert3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Заполнение) VALUES ('chole3d','ProStack','prostak -o chole3d', 1, "tif,txt", "tif", "N/A", "Этот оператор заполняет области выключенных пикселей, окруженные включенными пикселями, используя структурный элемент.
+
+
+INPUT
+1 image:.tif
+2 text:.txt - structural element
+OUTPUT
+1 image:.tif", 'chole3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты) VALUES ('maxlsm','ProStack','prostak -o maxlsm', 1, "lsm", "tif", "1;
+Comma separated list;string;0,1,2;
+
+-s $1;", "Этот оператор вычисляет попиксельный максимум каналов в стеке.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+2 image:.tif
+3 image:.tif", 'maxlsm', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты) VALUES ('diglsm','ProStack','prostak -o diglsm', 1, "lsm", "tif", "1;
+Channel;int;0;
+
+-r $1;", "Этот оператор извлекает один канал из многоканального изображения LSM.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif", 'diglsm', 2, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Сегментация, Пороговый_фильтр, Порог, Адаптивный, Статистический) VALUES ('threshold3d','ProStack','prostak -o threshold3d', 1, "tif", "tif,txt", "3;
+Порог;double;10.0;
+Метод;choice;2;plain;otsu;
+Применить?;bool;-r 1;-r 0;
+
+-p $1 -s $2 $3;", "Пороговый фильтр", 'threshold3d', 2, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Форма, Сравнить_формы) VALUES ('sselect3d','ProStack','prostak -o sselect3d', 1, "tif,tif", "tif", "5;
+Максимальный сегментt;int;100;
+Минимальный сегмент;int;10;
+Правило;choice;2;accept;reject;
+Критерий;double;0.1;
+Связность;choice;2;6;26;
+
+-p $4 -s $1,$2,$3 -r $5;", "В сегментированном изображении 
+могут присутствовать объекты различной природы, а также артефакты.
+С другой стороны, некоторые характеристики интересующих объектов,
+как то: форма или характерный размер, могут быть известны
+a priori и позволяют создать шаблон объекта, что позволяет
+найти в изображении наиболее близкие по своим характеристикам
+объекты. Объекты, не соответствующие шаблону удаляются из изображения.
+Объект может быть охарактеризован набором моментов и инвариантов
+сдвига, растяжения и поворота, тогда сходство объектов определяется
+как евклидово расстояние между их векторами харатеристик. Если расстояние
+меньше заданной точности, то объекты считаются сходными.", 'shapeselect3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Разное, Утилиты, Морфология) VALUES ('vtxt','ProStack','prostak -o vtxt', 1, "tif", "txt", "2;
+Формат;choice;2;xyz;vrml_sphere;
+Связность;choice;2;6;26;
+
+-s $1 -r $2;", "Этот оператор преобразует стек двоичных изображений в текстовый файл.", 'vobjextr', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Реконструкция, Ошибки) VALUES ('rec3dbp','ProStack','prostak -o rec3dbp', 1, "tif,tif", "tif", "2;
+Connectivity;choice;2;6;26;
+Plane;int;0;
+
+-r $1 -s $2;", "Этот оператор выполняет морфологическую реконструкцию изображения по маркеру.
+
+
+INPUT
+1 image:.tif
+2 marker:.tif
+OUTPUT
+1 image:.tif", 'bpreconstruct3d', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Реконструкция, Ошибки) VALUES ('getp','ProStack','prostak -o getp', 1, "tif", "tif", "1;
+Plane;int;0;
+
+-r $1;", "Извлечение плоскости.
+
+
+INPUT
+1 image:.tif
+2 marker:.tif
+OUTPUT
+1 image:.tif", 'getplane', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Реконструкция, Ошибки) VALUES ('setp','ProStack','prostak -o setp', 1, "tif,tif", "tif", "1;
+Plane;int;0;
+
+-r $1;", "Замена плоскости.
+
+
+INPUT
+1 image:.tif
+2 marker:.tif
+OUTPUT
+1 image:.tif", 'setplane', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Реконструкция, Ошибки) VALUES ('pbreak','ProStack','prostak -o pbreak', 1, "tif", "tif,tif", "1;
+Plane;int;0;
+
+-r $1;", "Разделение по плоскости.
+
+
+INPUT
+1 image:.tif
+2 marker:.tif
+OUTPUT
+1 image:.tif", 'breakvolume', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Морфология, Установить, Реконструкция, Ошибки) VALUES ('punite','ProStack','prostak -o punite', 1, "tif,tif", "tif", "N/A", "Объединение плоскостей.
+
+
+INPUT
+1 image:.tif
+2 marker:.tif
+OUTPUT
+1 image:.tif", 'unitevolumes', 2, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Форма, Структурный_элемент) VALUES ('strel3dw','ProStack','prostak -o strel3dw', 1, "", "txt", "6;
+Window height;int;3;
+Window width;int;3;
+Window depth;int;3;
+Window wall;int;3;
+ShapeXY;choice;2;disk;square;
+ShapeYZ;choice;2;disk;square;
+
+-s $1,$2,$3,$4,$5,$6;", "Этот оператор генерирует файл структурного элемента.
+
+
+INPUT
+0
+OUTPUT
+1 text:.txt
+PARAMETERS
+Window width - in pixels,
+Window height - in pixels,
+Shape - disk or square.", 'strel3dw', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Масштаб) VALUES ('restack3d','ProStack','prostak -o restack3d', 1, "tif", "tif", "1;
+Step;int;2;
+
+-r $1;", "Этот оператор уменьшает размер входного изображения, отбрасывая плоскости.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Step.", 'remplane', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('surf3d','ProStack','prostak -o surf3d', 1, "tif", "txt", "6;
+Множитель столбцов;double;1;
+Множитель строк;double;1;
+Множитель плоскостей;double;1;
+Макс.штраф удаления ребра;double;1000;
+Мин.угол;double;1;
+Формат;choice;4;vtk;oogl;ooglb;gts;
+
+-s $1,$2,$3,$4,$5,$6;", "Этот оператор создает триангулированную поверхность.", 'surf3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Измерить, Моменты) VALUES ('shape','ProStack','prostak -o shape', 1, "tif", "txt", "N/A", "Этот оператор выводит описание формы.
+", 'shapeextr', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Измерить, Моменты) VALUES ('shape3d','ProStack','prostak -o shape3d', 1, "tif", "txt", "1;
+Связность;choice;2;6;26;
+
+-r $1;", "Этот оператор выводит описание формы", 'shapeextr3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Комбинация, Попиксельно, Среднее) VALUES ('vavg','ProStack','prostak -o vavg', 1, "tif,tif", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Этот оператор попиксельное среднее", 'average', 3, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Абсолютная_разность, Комбинация, Попиксельно) VALUES ('vmabs','ProStack','prostak -o vmabs', 1, "tif,tif", "tif", "N/A", "Этот оператор вычисляет абсолютное значение разности", 'minusabs', 3, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Комбинация, Цвет, Слои) VALUES ('vrgb','ProStack','prostak -o vrgb', 1, "tif,tif,tif", "tif", "N/A", "Каждый пиксел результирующего изображения получает значение, соответствующие интенсивности во входных изображениях и цвету, заданному для этого изображения.", 'rgbcomb', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Комбинация, Попиксельно, Максимум) VALUES ('vmax','ProStack','prostak -o vmax', 1, "tif,tif", "tif", "2;
+Не предполагать 12 бит;bool;%20;-b;
+Вывод 8 бит;bool;%20;-a;
+
+$1 $2;", "Этот оператор вычисляет попиксельный максимум", 'maximum', 3, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Масштаб) VALUES ('lv3d','ProStack','prostak -o lv3d', 1, "tif", "tif", "N/A", "Этот оператор поворачивает объем на 90 градусов в горизонтальной плоскости.", 'leftview3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Масштаб) VALUES ('rv3d','ProStack','prostak -o rv3d', 1, "tif", "tif", "N/A", "Этот оператор поворачивает объем на -90 градусов в горизонтальной плоскости.", 'rightview3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Масштаб) VALUES ('tv3d','ProStack','prostak -o tv3d', 1, "tif", "tif", "N/A", "Этот оператор поворачивает объем на 90 градусов в вертикальной плоскости.", 'topview3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Масштаб) VALUES ('zscale3d','ProStack','prostak -o zscale3d', 1, "tif", "tif", "1;
+Scale from 1;double;2.0;
+
+-p $1;", "Этот оператор масштабирует стек в направлении z.
+
+
+INPUT
+1 image:.tif
+OUTPUT
+1 image:.tif
+PARAMETERS
+Scale - the scale factor.", 'zscale3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('qu3d','ProStack','prostak -o qu3d', 1, "tif,tif,txt", "txt", "2;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+
+-r $1 -s $2;", "Этот оператор извлекает количественную информацию", 'quantify3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('quremask','ProStack','prostak -o quremask', 1, "tif,tif,txt", "txt", "2;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+
+-r $1 -s $2;", "Этот оператор добавляет номер объекта во 2й маске в данные по первой", 'quremask3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('quresort','ProStack','prostak -o quresort', 1, "tif,txt", "txt,tif", "6;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+Index;int;0;
+RefTag;string;refch;
+NewTag;string;newch;
+Ascending;bool;1;0;
+
+-r $1 -s $2,$3,$4,$5,$6;", "Этот оператор добавляет количество блобов в отсортированном списке.
+
+INPUT
+1 image:.tif
+2 text:.txt
+OUTPUT
+1 text:.txt
+2 image:.tif
+PARAMETERS
+Connectivity - 6 or 26,
+Tag - String identifier for the mask label,
+Index - int,
+RefTag - String identifier,
+NewTag - String identifier.", 'quresort3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('qu3dinit', 'ProStack', 'prostak -o qu3d', 1, "tif,tif", "txt", "2;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+
+-r $1 -s $2;", "Этот оператор извлекает количественную информацию", 'quantify3dinit', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('qu3d2csv', 'ProStack', 'prostak -o qu3d2csv', 1, "txt", "csv", "N/A", "Этот оператор извлекает количественную информацию в csv формате", 'quantify3d2csv', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Ошибки, Деконволюция) VALUES ('decsup', 'ProStack', 'prostak -o decsup', 1, "tif,txt", "tif", "4;
+Max. num. of iterations;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+
+-s $1,$2,$3,$4;", "Деконволюция.", 'deconvrl', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Ошибки, Деконволюция) VALUES ('decsup_i', 'ProStack', 'prostak -o decsup', 1, "tif", "tif", "6;
+Max. num. of iterations;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5,$6;", "Деконволюция.", 'deconvrl_i', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Ошибки, Деконволюция) VALUES ('decbsup', 'ProStack', 'prostak -o decbsup', 1, "tif,txt", "tif,txt", "5;
+Max. num. of iterations;int;100;
+Max. blind iter.;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+
+-s $1,$2,$3,$4,$5;", "Слепая деконволюция.", 'deconvrlblind', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Ошибки, Деконволюция) VALUES ('decbsup_i', 'ProStack', 'prostak -o decbsup', 1, "tif", "tif,txt", "7;
+Max. num. of iterations;int;100;
+Max. blind iter.;int;100;
+Criterion;double;0.01;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5,$6,$7;", "Слепая деконволюция.", 'deconvrlblind_i', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Ошибки, Деконволюция, Коррекция, Удаление_шума, Винер) VALUES ('decwiener', 'ProStack', 'prostak -o decwiener', 1, "tif,txt", "tif", "4;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+Gamma(sing.red.);double;1.0;
+Alpha(Wiener==1);double;1.0;
+
+-s $1,$2,$3,$4;", "Деконволюция с Wiener.", 'deconvw', 2, 1, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Ошибки, Деконволюция, Коррекция, Удаление_шума, Винер) VALUES ('decwiener_i', 'ProStack', 'prostak -o decwiener', 1, "tif", "tif", "6;
+Lambda;double;0.01;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Gamma(sing.red.);double;1.0;
+Alpha(Wiener==1);double;1.0;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5,$6;", "Деконволюция с Wiener.", 'deconvw_i', 2, 1, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Ошибки, Деконволюция) VALUES ('dectm', 'ProStack', 'prostak -o dectm', 1, "tif,txt", "tif", "3;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+Gamma(sing.red.);double;1.0;
+
+-s $1,$2,$3;", "Деконволюция с Tikhonov-Miller", 'deconvtm', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Ошибки, Деконволюция) VALUES ('dectm_i', 'ProStack', 'prostak -o dectm', 1, "tif", "tif", "5;
+Lambda;double;0.01;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Gamma(sing.red.);double;1.0;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5;", "Деконволюция с Tikhonov-Miller", 'deconvtm_i', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Ошибки, Деконволюция) VALUES ('decinv', 'ProStack', 'prostak -o decinv', 1, "tif,txt", "tif", "3;
+Lambda;double;0.001;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+Gamma(sing.red.);double;1.0;
+
+-s $1,$2,$3;", "Обратный фильтр в частотной области", 'deconvi', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Восстановление, Ошибки, Деконволюция) VALUES ('decinv_i', 'ProStack', 'prostak -o decinv', 1, "tif", "tif", "5;
+Lambda;double;0.01;
+PSF type;choice;5;bessel;gauss;exp;confocal_bessel;ones;
+PSF parameter;double;1.07;
+Gamma(sing.red.);double;1.0;
+Window;int;-1;
+
+-s $1,$2,$3,$4,$5;", "Обратный фильтр в частотной области", 'deconvi_i', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Преобразование) VALUES ('vvarbc3d','ProStack','prostak -o vvarbc3d', 1, "txt", "txt", "5;
+Output section;string;Statistics;
+Class 1 section;string;Shape:1;
+Class 1 data;string;channel1;
+Class 2 section;string;Shape:2;
+Class 2 data;string;channel2;
+
+-s $1,$2,$3,$4,$5;", "Этот оператор вычисляет соотношение дисперсий значений пикселей в первом вводе между двумя классами и внутри них.", 'vvarbc3d', 2, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Преобразование) VALUES ('vrmbg','ProStack','prostak -o vrmbg', 1, "tif,txt", "tif", "4;
+Bgr mean coeff;double;1.0;
+Bgr section;string;Shape:0;
+Bgr stdev coeff;double;3.0;
+Bgr data;string;channel1;
+
+-s $1,$2,$3,$4;", "Этот оператор удаляет фон.", 'vrmbg', 2, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Преобразование) VALUES ('vrmbg_i','ProStack','prostak -o vrmbg', 1, "tif", "tif", "4;
+Bgr mean coeff;double;1.0;
+Bgr mean;double;8.0;
+Bgr stdev coeff;double;3.0;
+Bgr stdev;double;7.0;
+
+-s $1,$2,$3,$4;", "Этот оператор удаляет фон.", 'vrmbg_1', 2, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка) VALUES ('grid','ProStack','prostak -o grid', 1, "tif", "tif", "1;
+Number of bins;int;0;
+
+-r $1;", "Этот оператор делит изображение на ячейки.
+
+PARAMETERS
+Number of bins - number of sectors to produce.", 'grid', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка) VALUES ('grid3d_i','ProStack','prostak -o grid3d', 1, "tif", "tif", "9;
+Type;choice;2;cartesian;elliptical;
+Cell height (% OH);double;1;
+Cell width (% OH);double;1;
+Cell depth (% OH);double;1;
+Offset (% OH);double;0.5;
+Criterion;double;0.01;
+X Center;double;100.0;
+Y Center;double;100.0;
+Z Center;double;100.0;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9;", "Этот оператор делит изображение на ячейки.", 'grid3d_i', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка) VALUES ('grid3d','ProStack','prostak -o grid3d', 1, "tif,txt", "tif", "7;
+Type;choice;2;cartesian;elliptical;
+Cell height (% OH);double;1;
+Cell width (% OH);double;1;
+Cell depth (% OH);double;1;
+Offset (% OH);double;0.5;
+Criterion;double;0.01;
+Shape section;string;Shape:0;
+
+-s $1,$2,$3,$4,$5,$6,$7;", "Этот оператор делит изображение на ячейки.", 'grid3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка) VALUES ('qu3dtrans','ProStack','prostak -o qu3dtrans', 1, "txt,txt", "txt", "5;
+Shape section;string;Shape:0;
+Center;bool;1;0;
+Percent;bool;1;0;
+Min Volume;double;20.0;
+Max Volume;double;350.0;
+
+-s $1,$2,$3,$4,$5;", "Этот оператор преобразует координаты.", 'quantify3dtr', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('surf3dfull','ProStack','prostak -o surf3dfull', 1, "tif", "txt", "10;
+Множитель столбцов;double;1;
+Множитель строк;double;1;
+Множитель плоскостей;double;1;
+Макс.штраф удаления ребра;double;1000;
+Мин.угол;double;1;
+Формат;choice;4;vtk;oogl;ooglb;gts;
+Шаг по столбам;double;1;
+Шаг по строкам;double;1;
+Шаг по плоскостям;double;1;
+Функция;choice;4;cartesian;tetra;tetra_bounded;tetra_bcl;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8,$9,$10;", "Этот оператор создает триангулированную поверхность.", 'surf3dfull', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('surf2vol','ProStack','prostak -o surf2vol', 1, "txt", "tif", "N/A", "Этот оператор создает триангулированную поверхность.", 'surf2vol', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Масштаб) VALUES ('pump3d','ProStack','prostak -o pump3d', 1, "tif", "tif", "N/A", "Этот оператор создает 3d объем, используя карту расстояний", 'pump3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Геометрия, Размер, Масштаб) VALUES ('pump3d_data','ProStack','prostak -o pump3d', 1, "tif,tif", "tif", "N/A", "Этот оператор создает 3d объем, используя карту расстояний", 'pump3ddata', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка) VALUES ('mslice3d','ProStack','prostak -o mslice3d', 1, "tif,txt", "tif", "3;
+Cell step (% OH);double;1;
+Direction;int;2;
+Shape section;string;Shape:0;
+
+-s $3,$1,$2;", "Этот оператор визуализирует изображение расстояния, предоставленное в качестве первого входного сигнала.", 'mslice3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка) VALUES ('mslicegcp3d','ProStack','prostak -o mslicegcp3d', 1, "tif,txt", "tif", "7;
+Cell step (% OH);double;1;
+Direction;int;2;
+Slice Direction;int;2;
+Shape section;string;Shape:0;
+Cell height (% OH);double;1;
+Cell width (% OH);double;1;
+Cell depth (% OH);double;1;
+
+-s $4,$1,$2,$3,$5,$6,$7;", "Этот оператор визуализирует изображение расстояния, предоставленное в качестве первого входного сигнала.", 'mslice3dgcp', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка) VALUES ('mlsreg','ProStack','prostak -o mlsreg', 1, "tif,tif,tif", "tif", "2;
+Alpha;double;1;
+Type;choice;3;affine;similar;rigid;
+
+-s $2,$1;", "Этот оператор находит контрольные точки для регистрации, используя изображение расстояния.", 'regmls', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('qumark3d', 'ProStack', 'prostak -o qumark3d', 1, "tif", "tif", "1;
+Connectivity;choice;2;6;26;
+
+-r $1;", "Этот оператор заменяет кластеры средним пикселем", 'quantify3dmark', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('qumap3d', 'ProStack', 'prostak -o qumap3d', 1, "tif,txt", "tif", "3;
+Connectivity;choice;2;6;26;
+Channel;string;channel1;
+Index;int;1;
+
+-r $1 -s $2,$3;", "Этот оператор прокрашивает маску из первого канала данными из второго. из qu3dinit или qu3d: 0 - среднее, 1 -вариация, 2 - стд.откл., 3 - максимум, 4 - минимум, 5 - медиана, 6 - сумма, 7 - площадь.", 'quantify3dmap', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Сетка) VALUES ('qurelabel','ProStack','prostak -o qurelabel', 1, "tif,txt,tif,tif", "txt", "3;
+Alpha;double;1;
+Type;choice;3;affine;similar;rigid;
+Connectivity;choice;2;6;26;
+
+-s $2,$1 -r $3;", "Этот оператор помечает каждый объект в зарегистрированной маске его индексом в незарегистрированной маске.", 'quantify3drelabel', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Арифметический, Полинарный, Сумма, Разность, Произведение, Комбинация, Попиксельно) VALUES ('vaff','ProStack','prostak -o vaff', 1, "tif,tif", "tif", "3;
+Coeff 1;double;1.0;
+Coeff 2;double;1.0;
+Coeff 3;double;0.0;
+
+-s $1,$2,$3;", "Этот оператор вычисляет линейную комбинацию.", 'affinecomb', 2, 1, 1, 1, 1, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Выделение_объектов, Количественный, Листинг_объектов) VALUES ('quvu','ProStack','prostak -o quvu', 1, "tif,tif,txt", "txt", "5;
+Connectivity;choice;2;6;26;
+Tag;string;channel1;
+Cycles;int;3;
+VertLim;int;10;
+Alpha;double;2.0;
+
+-r $1 -s $2,$4,$5 -p $3;", "Этот оператор извлекает количественную информацию о количестве вершин в клетках в клеточной маске (первый входной файл)", 'quantify3d', 2, 1, 1, 1);
+INSERT OR REPLACE INTO Operators (name, implementor, executable, type, inputs, outputs, uidescription, message, metaname, metaweight, Комбинация, Цвет, Слои) VALUES ('movl8','ProStack','prostak -o movl', 1, "tif,tif,tif,tif,tif,tif,tif,tif", "tif", "8;
+цвет 1;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 2;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 3;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 4;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 5;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 6;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 7;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+цвет 8;choice;10;red;green;blue;black;white;yellow;magenta;cyan;pink;brown;
+
+-s $1,$2,$3,$4,$5,$6,$7,$8;", "Каждый пиксел результирующего изображения получает значение, соответствующие интенсивности во входных изображениях и цвету, заданному для этого изображения.", 'colorcomb6', 2, 1, 1, 1);
